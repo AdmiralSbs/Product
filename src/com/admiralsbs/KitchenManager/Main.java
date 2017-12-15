@@ -78,12 +78,14 @@ public class Main extends JFrame {
     private static void findFile() {
         File[] arrayOfFiles = (new File("Kitchens")).listFiles();
         ArrayList<String> listOfFiles = new ArrayList<>();
-        for (File f : arrayOfFiles) {
-            if (f.isFile()) {
-                String name = f.toString();
-                if (name.length() > 8) {
-                    if (name.substring(name.length() - 8).equals(".kitchen")) {
-                        listOfFiles.add(name.substring(0, name.length() - 8));
+        if (arrayOfFiles != null) {
+            for (File f : arrayOfFiles) {
+                if (f.isFile()) {
+                    String name = f.toString();
+                    if (name.length() > 8) {
+                        if (name.substring(name.length() - 8).equals(".kitchen")) {
+                            listOfFiles.add(name.substring(0, name.length() - 8));
+                        }
                     }
                 }
             }
