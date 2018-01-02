@@ -5,33 +5,28 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class KitchenAddIngredientPanel extends JPanelKitchen {
+public class AddPersonPanel extends JPanelKitchen {
+
     private JTextField nameField;
-    private JTextField unitField;
-    private JCheckBox hasCount;
 
-
-    public KitchenAddIngredientPanel() {
-        topLabel = new JLabel("Add New Ingredient");
-        JButton[] b = {new JButton("Create Ingredient"), new JButton("Back")};
+    public AddPersonPanel() {
+        topLabel = new JLabel("Add New Person");
+        JButton[] b = {new JButton("Create Person"), new JButton("Back")};
         buttons = b;
-        buttons[0].addActionListener(new CreateIngredient());
+        buttons[0].addActionListener(new CreatePerson());
         int[] l = {-1, 1};
         locations = l;
-        size = new Dimension(500, 500);
+        size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();
 
+
+        //JPanel namePanel = new JPanel();
+        //namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
         JLabel nameLabel = new JLabel("Name: ");
-        JLabel hasCountLabel = new JLabel("Has Count: ");
-        JLabel unitLabel = new JLabel("Unit: ");
         nameField = new JTextField();
         nameField.setPreferredSize(new Dimension(200, 20));
-        unitField = new JTextField();
-        unitField.setPreferredSize(new Dimension(200, 20));
-        hasCount = new JCheckBox();
-        hasCount.setSelected(true);
-        hasCount.addActionListener(new SwapCheckBox());
+        //nameField.setSize(new Dimension(100,20));
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -51,48 +46,24 @@ public class KitchenAddIngredientPanel extends JPanelKitchen {
         c.gridx = 1;
         add(nameField, c);
 
-        c.anchor = GridBagConstraints.EAST;
-        c.gridx = 0;
-        c.gridy = 2;
-        add(hasCountLabel, c);
-
-        c.anchor = GridBagConstraints.WEST;
-        c.gridx = 1;
-        add(hasCount, c);
-
-        c.anchor = GridBagConstraints.EAST;
-        c.gridx = 0;
-        c.gridy = 3;
-        add(unitLabel, c);
-
-        c.anchor = GridBagConstraints.WEST;
-        c.gridx = 1;
-        add(unitField, c);
-
         c.anchor = GridBagConstraints.CENTER;
         c.gridwidth = 2;
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 2;
         add(buttons[0], c);
 
-        c.gridy = 5;
+        c.gridy = 3;
         add(buttons[1], c);
     }
 
-    private class SwapCheckBox implements ActionListener {
+    private class CreatePerson implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            unitField.setEnabled(hasCount.isSelected());
-        }
-    }
-
-    private class CreateIngredient implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
+            //System.out.println("Did");
             String test = nameField.getText().trim();
             if (test.length() == 0)
                 return;
-            else if (Main.isNameAcceptable(test))
+            else if (!Main.isNameAcceptable(test))
                 failed("Name can only have basic characters");
             else if (Main.getKitchen().getPerson(test) == null) {
                 if (Main.getKitchen().addPerson(new Person(test)))

@@ -7,6 +7,7 @@ import java.util.Vector;
 
 public class JAutoComboBox extends JComboBox<Object> {
 
+    static final ArrayList<ObjectKitchen> ONE_ITEM_LIST = new ArrayList<>();
     ArrayList<ObjectKitchen> baseList;
     Vector currentList = new Vector();
 

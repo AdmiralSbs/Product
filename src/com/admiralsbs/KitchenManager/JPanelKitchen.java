@@ -35,6 +35,8 @@ public abstract class JPanelKitchen extends JPanel {
         setSize(size);
     }
 
+    public void switchedTo() { }
+
     public Dimension getBaseSize() {
         return size;
     }

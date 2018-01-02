@@ -11,15 +11,16 @@ import java.util.ArrayList;
 public class Main extends JFrame {
     private static Kitchen kitchen;
     private static JPanel currentPanel;
-    private static JPanel[] panels = new JPanel[13];
+    private static JPanelKitchen[] panels = new JPanelKitchen[13];
     private static Main main;
-    public static Font TOP_LABEL_FONT;
-    private static boolean debug = false;
+    static Font TOP_LABEL_FONT;
+    private static boolean DEBUG = false;
     private static int widthBuffer;
     private static int heightBuffer;
-    public static final String ACCEPTABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "-_ ";
 
-    public Main() {
+    private static final String ACCEPTABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "-_ ";
+
+    private Main() {
         getBuffer();
         JLabel j = new JLabel();
         j.setFont(new Font(j.getFont().getName(), Font.BOLD, 36));
@@ -28,22 +29,23 @@ public class Main extends JFrame {
         panels[1] = new KitchenEditorPanel();
         panels[2] = new UpdateKitchenPanel();
 
-        panels[7] = new KitchenAddIngredientPanel();
+        panels[7] = new AddIngredientPanel();
 
-        panels[9] = new KitchenAddPersonPanel();
+        panels[9] = new AddPersonPanel();
 
-
+        panels[12] = new RemovePersonPanel();
         sCP(0);
     }
 
     public static void main(String[] args) {
         findFile();
+        JAutoComboBox.ONE_ITEM_LIST.add(new Person("!@#"));
 
         main = new Main();
         main.setLocation(100, 100);
         main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         main.setVisible(true);
-        while (debug) {
+        while (DEBUG) {
             System.out.print(currentPanel.getWidth() + ", " + currentPanel.getHeight() + "; ");
             System.out.println(main.getWidth() + ", " + main.getHeight());
             try {
@@ -53,19 +55,20 @@ public class Main extends JFrame {
         }
     }
 
-    public static void setCurrentPanel(int i) {
+    static void setCurrentPanel(int i) {
         main.sCP(i);
-        //Other stuff
+        //Other static stuff
     }
 
     private void sCP(int i) {
         System.out.println("i: " + i);
+        panels[i].switchedTo();
+
         currentPanel = panels[i];
-        System.out.println("Main is null: " + main == null);
+        //System.out.println("Main is null: " + (main == null));
         setContentPane(currentPanel);
-        if (currentPanel instanceof JPanelKitchen)
-            setMinimumSize(new Dimension((int) ((JPanelKitchen) getContentPane()).getBaseWidth() + widthBuffer,
-                    (int) ((JPanelKitchen) getContentPane()).getBaseHeight() + heightBuffer));
+        setMinimumSize(new Dimension(((JPanelKitchen) getContentPane()).getBaseWidth() + widthBuffer,
+                ((JPanelKitchen) getContentPane()).getBaseHeight() + heightBuffer));
         setSize(getMinimumSize());
     }
 
@@ -111,25 +114,30 @@ public class Main extends JFrame {
             choice = null;
             while (choice == null) {
                 choice = Integer.toString(JOptionPane.showOptionDialog(null, panel,
-                        "Create New Kitchen", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                        "Create New Kitchen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, options, options[0]));
             }
             kitchen = new Kitchen(choice);
         } else {
-            ObjectInputStream reader = null;
+            ObjectInputStream reader;
             try {
                 reader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(
                         "Kitchens" + File.separator + choice + ".kitchen")));
                 kitchen = (Kitchen) reader.readObject();
             } catch (Exception e) {
-                System.out.println("Issue reading file");
-                System.err.println(e);
+                System.err.println("Issue reading file");
+                //System.err.println(e);
                 System.exit(2);
             }
         }
+        sendKitchenInformation();
     }
 
-    public static boolean isNameAcceptable(String name) {
+    private static void sendKitchenInformation() {
+
+    }
+
+    static boolean isNameAcceptable(String name) {
         name = name.trim();
         if (name.length() == 0)
             return false;
@@ -141,7 +149,5 @@ public class Main extends JFrame {
         return true;
     }
 
-    public static Kitchen getKitchen() {
-        return kitchen;
-    }
+    static Kitchen getKitchen() { return kitchen; }
 }

@@ -43,4 +43,9 @@ public abstract class ObjectKitchen {
         }
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+
 }
