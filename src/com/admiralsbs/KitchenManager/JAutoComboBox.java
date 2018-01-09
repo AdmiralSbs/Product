@@ -12,6 +12,7 @@ public class JAutoComboBox extends JComboBox<Object> {
     Vector currentList = new Vector();
 
     public JAutoComboBox(ArrayList<ObjectKitchen> l) {
+        setRenderer(new JListCellRenderer());
         baseList = l;
         Collections.addAll(currentList, baseList);
 
@@ -46,6 +47,22 @@ public class JAutoComboBox extends JComboBox<Object> {
 
     public ArrayList<ObjectKitchen> getBaseList() {
         return baseList;
+    }
+
+    public void setList(ArrayList<ObjectKitchen> l) {
+        baseList = l;
+        Collections.addAll(currentList, baseList);
+
+        setModel(new DefaultComboBoxModel(currentList));
+        setSelectedIndex(-1);
+        setEditable(true);
+
+        JTextField text = (JTextField) this.getEditor().getEditorComponent();
+        text.setFocusable(true);
+        text.setText("");
+        text.addKeyListener(new ComboListener(this, currentList));
+
+        setItemsToList();
     }
 
 

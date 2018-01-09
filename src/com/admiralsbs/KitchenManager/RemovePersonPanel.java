@@ -47,9 +47,13 @@ public class RemovePersonPanel extends JPanelKitchen {
     @Override
     public void switchedTo() {
         ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        for (Person p : Main.getKitchen().getPeople()) { peep.add(p); }
-        peopleBox = new JAutoComboBox(peep);
+        for (Person p : Main.getKitchen().getPeople()) {
+            peep.add(p);
+            //System.out.println(p.getName());
+        }
+        peopleBox.setList(peep);
         System.out.println("Switched to happened");
+
     }
 
     private class RemovePerson implements ActionListener {
