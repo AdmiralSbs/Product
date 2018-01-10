@@ -5,24 +5,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 
-public class RemovePersonPanel extends JPanelKitchen {
+public class RemoveIngredientPanel extends JPanelKitchen {
 
-    private JAutoComboBox peopleBox;
+    private JAutoComboBox ingredientBox;
 
-    public RemovePersonPanel() {
-        topLabel = new JLabel("Remove Person");
+    public RemoveIngredientPanel() {
+        topLabel = new JLabel("Remove Ingredient");
         JButton[] b = {new JButton("Remove"), new JButton("Back")};
         buttons = b;
-        buttons[0].addActionListener(new RemovePersonPanel.RemovePerson());
+        buttons[0].addActionListener(new RemoveIngredientPanel.RemoveIngredient());
         int[] l = {-1, 1};
         locations = l;
         size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();
 
-        peopleBox = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
+        ingredientBox = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -35,7 +34,7 @@ public class RemovePersonPanel extends JPanelKitchen {
 
         c.gridwidth = 1;
         c.gridy = 1;
-        add(peopleBox, c);
+        add(ingredientBox, c);
 
         c.gridx = 1;
         add(buttons[0], c);
@@ -47,21 +46,21 @@ public class RemovePersonPanel extends JPanelKitchen {
     @Override
     public void switchedTo() {
         ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        for (Person p : Main.getKitchen().getPeople()) {
+        for (Ingredient p : Main.getKitchen().getIngredients()) {
             peep.add(p);
             //System.out.println(p.getName());
         }
-        peopleBox.setList(peep);
+        ingredientBox.setList(peep);
         System.out.println("Switched to happened");
 
     }
 
-    private class RemovePerson implements ActionListener {
+    private class RemoveIngredient implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             //System.out.println("Did");
-            ObjectKitchen selected = (ObjectKitchen) peopleBox.getSelectedItem();
-            String test = ((ObjectKitchen)peopleBox.getSelectedItem()).getName();
+            ObjectKitchen selected = (ObjectKitchen) ingredientBox.getSelectedItem();
+            String test = ((ObjectKitchen)ingredientBox.getSelectedItem()).getName();
 
         }
 
@@ -79,5 +78,5 @@ public class RemovePersonPanel extends JPanelKitchen {
                     JOptionPane.PLAIN_MESSAGE);
         }
     }
-
+    
 }

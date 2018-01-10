@@ -30,9 +30,10 @@ public class Main extends JFrame {
         panels[2] = new UpdateKitchenPanel();
 
         panels[7] = new AddIngredientPanel();
-
+        panels[8] = new AddRecipePanel();
         panels[9] = new AddPersonPanel();
-
+        panels[10] = new RemoveIngredientPanel();
+        panels[11] = new RemoveRecipePanel();
         panels[12] = new RemovePersonPanel();
         sCP(0);
     }
