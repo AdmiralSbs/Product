@@ -18,7 +18,7 @@ public class RemovePersonPanel extends JPanelKitchen {
         buttons[0].addActionListener(new RemovePersonPanel.RemovePerson());
         int[] l = {-1, 1};
         locations = l;
-        size = new Dimension(350, 390);
+        //size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();
 

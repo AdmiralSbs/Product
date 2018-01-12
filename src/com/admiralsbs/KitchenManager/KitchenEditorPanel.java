@@ -15,7 +15,7 @@ public class KitchenEditorPanel extends JPanelKitchen {
         buttons = b;
         int[] l = {7, 8, 9, 10, 11, 12, 0};
         locations = l;
-        size = new Dimension(350, 390);
+        //size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();
 

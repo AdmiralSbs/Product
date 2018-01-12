@@ -11,6 +11,7 @@ public class AddRecipePanel extends JPanelKitchen {
     private JTextField categoryField;
     private JCheckBox[] mealSelections = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
     private String[] meals = {"Breakfast", "Lunch", "Dinner", "Desert", "Snack"};
+    private JAutoComboBox ingredients, selectedIngredients, people, selectedPeople;
 
     public AddRecipePanel() {
         topLabel = new JLabel("Add New Recipe");
@@ -20,21 +21,29 @@ public class AddRecipePanel extends JPanelKitchen {
         buttons[0].addActionListener(new AddRecipePanel.CreateRecipe());
         int[] l = {-1, 1, -1, -1, -1, -1};
         locations = l;
-        size = new Dimension(500, 500);
+        //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();
+
 
         JLabel nameLabel = new JLabel("Name: ");
         JLabel categoryLabel = new JLabel("Category: ");
         nameField = new JTextField();
+        //nameField.setColumns(50);
         nameField.setPreferredSize(new Dimension(200, 20));
         categoryField = new JTextField();
+        //categoryField.setColumns(50);
         categoryField.setPreferredSize(new Dimension(200, 20));
+
+        ingredients = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
+        selectedIngredients = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
+        people = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
+        selectedPeople = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.gridwidth = 2; //Change this if necessary
+        c.gridwidth = 4; //Change this if necessary
         c.insets = new Insets(10, 10, 10, 10);
         c.gridx = 0;
         c.gridy = 0;
@@ -59,7 +68,7 @@ public class AddRecipePanel extends JPanelKitchen {
         add(categoryField, c);
 
         for (int i = 0; i < meals.length; i++) {
-            c.anchor = GridBagConstraints.WEST;
+            c.anchor = GridBagConstraints.EAST;
             c.gridy++;
             c.gridx = 0;
             add(new JLabel(meals[i] + ": "), c);
@@ -77,6 +86,43 @@ public class AddRecipePanel extends JPanelKitchen {
 
         c.gridy++;
         add(buttons[1], c);
+
+        c.anchor = GridBagConstraints.NORTH;
+        c.gridwidth = 1;
+        c.gridx = 2;
+        c.gridy = 1;
+        c.gridheight = 4;
+        add(ingredients ,c);
+
+        c.gridx = 3;
+        add(selectedIngredients, c);
+
+        c.anchor = GridBagConstraints.CENTER;
+        c.gridheight = 1;
+        c.gridx = 2;
+        c.gridy = 5;
+        add(buttons[2], c);
+
+        c.gridx = 3;
+        add(buttons[3], c);
+
+        c.anchor = GridBagConstraints.NORTH;
+        c.gridx = 2;
+        c.gridy = 6;
+        c.gridheight = 3;
+        add(people ,c);
+
+        c.gridx = 3;
+        add(selectedPeople, c);
+
+        c.anchor = GridBagConstraints.CENTER;
+        c.gridheight = 1;
+        c.gridx = 2;
+        c.gridy = 9;
+        add(buttons[4], c);
+
+        c.gridx = 3;
+        add(buttons[5], c);
     }
 
 //    private class SwapCheckBox implements ActionListener {

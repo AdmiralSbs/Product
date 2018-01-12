@@ -2,6 +2,7 @@ package com.admiralsbs.KitchenManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowListener;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,13 +16,13 @@ public class Main extends JFrame {
     private static Main main;
     static Font TOP_LABEL_FONT;
     private static boolean DEBUG = false;
-    private static int widthBuffer;
-    private static int heightBuffer;
+//    private static int widthBuffer;
+//    private static int heightBuffer;
 
     private static final String ACCEPTABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "-_ ";
 
     private Main() {
-        getBuffer();
+        //getBuffer();
         JLabel j = new JLabel();
         j.setFont(new Font(j.getFont().getName(), Font.BOLD, 36));
         TOP_LABEL_FONT = j.getFont();
@@ -45,6 +46,7 @@ public class Main extends JFrame {
         main = new Main();
         main.setLocation(100, 100);
         main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        main.pack();
         main.setVisible(true);
         while (DEBUG) {
             System.out.print(currentPanel.getWidth() + ", " + currentPanel.getHeight() + "; ");
@@ -64,20 +66,20 @@ public class Main extends JFrame {
     private void sCP(int i) {
         System.out.println("i: " + i);
         panels[i].switchedTo();
-
         currentPanel = panels[i];
         //System.out.println("Main is null: " + (main == null));
         setContentPane(currentPanel);
-        setMinimumSize(new Dimension(((JPanelKitchen) getContentPane()).getBaseWidth() + widthBuffer,
-                ((JPanelKitchen) getContentPane()).getBaseHeight() + heightBuffer));
-        setSize(getMinimumSize());
+//        setMinimumSize(new Dimension(((JPanelKitchen) getContentPane()).getBaseWidth() + widthBuffer,
+//                ((JPanelKitchen) getContentPane()).getBaseHeight() + heightBuffer));
+//        setSize(getMinimumSize());
+        pack();
     }
 
-    private void getBuffer() {
-        pack();
-        widthBuffer = getWidth() - getContentPane().getWidth();
-        heightBuffer = getHeight() - getContentPane().getHeight();
-    }
+//    private void getBuffer() {
+//        pack();
+//        widthBuffer = getWidth() - getContentPane().getWidth();
+//        heightBuffer = getHeight() - getContentPane().getHeight();
+//    }
 
     private static void findFile() {
         File[] arrayOfFiles = (new File("Kitchens")).listFiles();
@@ -131,12 +133,14 @@ public class Main extends JFrame {
                 System.exit(2);
             }
         }
-        sendKitchenInformation();
+        //sendKitchenInformation();
     }
 
-    private static void sendKitchenInformation() {
+//    private static void sendKitchenInformation() {
+//
+//    }
 
-    }
+
 
     static boolean isNameAcceptable(String name) {
         name = name.trim();

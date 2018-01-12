@@ -9,7 +9,7 @@ public class AddIngredientPanel extends JPanelKitchen {
     private JTextField nameField;
     private JTextField unitField;
     private JCheckBox hasCount;
-
+    private JComboBox<Priority> priorityJComboBox;
 
     public AddIngredientPanel() {
         topLabel = new JLabel("Add New Ingredient");
@@ -18,13 +18,14 @@ public class AddIngredientPanel extends JPanelKitchen {
         buttons[0].addActionListener(new CreateIngredient());
         int[] l = {-1, 1};
         locations = l;
-        size = new Dimension(500, 500);
+        //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();
 
         JLabel nameLabel = new JLabel("Name: ");
         JLabel hasCountLabel = new JLabel("Has Count: ");
         JLabel unitLabel = new JLabel("Unit: ");
+        JLabel priorityLabel = new JLabel("Priority: ");
         nameField = new JTextField();
         nameField.setPreferredSize(new Dimension(200, 20));
         unitField = new JTextField();
@@ -32,6 +33,9 @@ public class AddIngredientPanel extends JPanelKitchen {
         hasCount = new JCheckBox();
         hasCount.setSelected(true);
         hasCount.addActionListener(new SwapCheckBox());
+
+        Priority[] pris = {Priority.LOW, Priority.MEDIUM, Priority.HIGH};
+        priorityJComboBox = new JComboBox<>(pris);
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -44,7 +48,7 @@ public class AddIngredientPanel extends JPanelKitchen {
 
         c.anchor = GridBagConstraints.EAST;
         c.gridwidth = 1;
-        c.gridy = 1;
+        c.gridy++;
         add(nameLabel, c);
 
         c.anchor = GridBagConstraints.WEST;
@@ -53,7 +57,7 @@ public class AddIngredientPanel extends JPanelKitchen {
 
         c.anchor = GridBagConstraints.EAST;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy++;
         add(hasCountLabel, c);
 
         c.anchor = GridBagConstraints.WEST;
@@ -62,20 +66,29 @@ public class AddIngredientPanel extends JPanelKitchen {
 
         c.anchor = GridBagConstraints.EAST;
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy++;
         add(unitLabel, c);
 
         c.anchor = GridBagConstraints.WEST;
         c.gridx = 1;
         add(unitField, c);
 
+        c.anchor = GridBagConstraints.EAST;
+        c.gridx = 0;
+        c.gridy++;
+        add(priorityLabel, c);
+
+        c.anchor = GridBagConstraints.WEST;
+        c.gridx = 1;
+        add(priorityJComboBox, c);
+
         c.anchor = GridBagConstraints.CENTER;
         c.gridwidth = 2;
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy++;
         add(buttons[0], c);
 
-        c.gridy = 5;
+        c.gridy++;
         add(buttons[1], c);
     }
 
@@ -89,18 +102,23 @@ public class AddIngredientPanel extends JPanelKitchen {
     private class CreateIngredient implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            String test = nameField.getText().trim();
-            if (test.length() == 0)
+            String name = nameField.getText().trim();
+            String unit = unitField.getText().trim();
+            boolean count = hasCount.isSelected();
+            if (name.length() == 0 || (!count && unit.length() == 0))
                 return;
-            else if (Main.isNameAcceptable(test))
+            else if (!Main.isNameAcceptable(name))
                 failed("Name can only have basic characters");
-            else if (Main.getKitchen().getPerson(test) == null) {
-                if (Main.getKitchen().addPerson(new Person(test)))
-                    succeeded(test);
+            else if ((!count && Main.isNameAcceptable(unit))) {
+                failed("Unit can only have basic characters");
+            }
+            else if (Main.getKitchen().getPerson(name) == null) {
+                if (Main.getKitchen().addIngredient(new Ingredient(name, 0, unit, (Priority) priorityJComboBox.getSelectedItem())))
+                    succeeded(name);
                 else
                     failed("Unknown error");
             } else
-                failed("Person already exists");
+                failed("Ingredient already exists");
 
         }
 
