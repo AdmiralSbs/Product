@@ -1,9 +1,10 @@
 package com.admiralsbs.KitchenManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public abstract class ObjectKitchen {
+public abstract class ObjectKitchen implements Serializable {
 
     protected final String name;
 

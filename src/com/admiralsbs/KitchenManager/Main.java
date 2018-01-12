@@ -2,11 +2,9 @@ package com.admiralsbs.KitchenManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Main extends JFrame {
@@ -45,12 +43,13 @@ public class Main extends JFrame {
 
         main = new Main();
         main.setLocation(100, 100);
-        main.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        main.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        main.addWindowListener(new WindowClose());
         main.pack();
         main.setVisible(true);
         while (DEBUG) {
-            System.out.print(currentPanel.getWidth() + ", " + currentPanel.getHeight() + "; ");
-            System.out.println(main.getWidth() + ", " + main.getHeight());
+            //System.out.print(currentPanel.getWidth() + ", " + currentPanel.getHeight() + "; ");
+            //System.out.println(main.getWidth() + ", " + main.getHeight());
             try {
                 Thread.sleep(1000);
             } catch (Exception ignored) {
@@ -64,7 +63,7 @@ public class Main extends JFrame {
     }
 
     private void sCP(int i) {
-        System.out.println("i: " + i);
+        //System.out.println("i: " + i);
         panels[i].switchedTo();
         currentPanel = panels[i];
         //System.out.println("Main is null: " + (main == null));
@@ -90,6 +89,8 @@ public class Main extends JFrame {
                     String name = f.toString();
                     if (name.length() > 8) {
                         if (name.substring(name.length() - 8).equals(".kitchen")) {
+                            int index = name.indexOf(File.separator);
+                            name = name.substring(index+1);
                             listOfFiles.add(name.substring(0, name.length() - 8));
                         }
                     }
@@ -116,21 +117,35 @@ public class Main extends JFrame {
             panel.add(txt);
             choice = null;
             while (choice == null) {
-                choice = Integer.toString(JOptionPane.showOptionDialog(null, panel,
+                int i = JOptionPane.showOptionDialog(null, panel,
                         "Create New Kitchen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, options, options[0]));
+                        null, options, options[0]);
+                choice = txt.getText();
+                //if (choice == null) continue;
+                if (!Main.isNameAcceptable(choice.trim())) {
+                    JOptionPane.showMessageDialog(null,
+                            "Please enter an acceptable name",
+                            "Invalid",
+                            JOptionPane.ERROR_MESSAGE);
+                    choice = null;
+                }
             }
+            //System.out.println(choice);
             kitchen = new Kitchen(choice);
         } else {
-            ObjectInputStream reader;
+            ObjectInputStream reader = null;
+            //System.out.println(choice);
             try {
-                reader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(
-                        "Kitchens" + File.separator + choice + ".kitchen")));
+                File file = new File("Kitchens" + File.separator + choice + ".kitchen");
+                //System.out.println(file.toString());
+                FileInputStream r1 = new FileInputStream(file);
+                BufferedInputStream r2 = new BufferedInputStream(r1);
+                reader = new ObjectInputStream(r1);
                 kitchen = (Kitchen) reader.readObject();
             } catch (Exception e) {
                 System.err.println("Issue reading file");
-                //System.err.println(e);
-                System.exit(2);
+                e.printStackTrace();
+                System.exit(1);
             }
         }
         //sendKitchenInformation();
@@ -139,7 +154,6 @@ public class Main extends JFrame {
 //    private static void sendKitchenInformation() {
 //
 //    }
-
 
 
     static boolean isNameAcceptable(String name) {
@@ -154,5 +168,69 @@ public class Main extends JFrame {
         return true;
     }
 
-    static Kitchen getKitchen() { return kitchen; }
+    static Kitchen getKitchen() {
+        return kitchen;
+    }
+
+    private static class WindowClose implements WindowListener {
+        @Override
+        public void windowOpened(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowClosing(WindowEvent windowEvent) {
+            File file = new File("Kitchens" + File.separator + kitchen.getOwner() + ".kitchen");
+
+            //System.out.println(kitchen.getOwner());
+            //System.out.println(file.toString());
+            ObjectOutputStream writer = null;
+            try {
+                writer = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+                if (file.exists())
+                    file.delete();
+                file.createNewFile();
+            } catch (FileNotFoundException e1) {
+                System.err.println("File not found");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            //System.out.println((kitchen == null));
+            try {
+                writer.writeObject(kitchen);
+                writer.close();
+            } catch (IOException e1 ) {
+                System.err.println("IOException");
+            } catch (Exception e2) {
+                System.err.println("OOps");
+            }
+            System.exit(0);
+        }
+
+        @Override
+        public void windowClosed(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowIconified(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowActivated(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent windowEvent) {
+
+        }
+    }
 }

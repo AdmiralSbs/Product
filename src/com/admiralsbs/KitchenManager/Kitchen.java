@@ -1,8 +1,9 @@
 package com.admiralsbs.KitchenManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Kitchen {
+public class Kitchen implements Serializable {
     private final String owner;
     private final ArrayList<Ingredient> ingredients;
     private final ArrayList<Recipe> recipes;
