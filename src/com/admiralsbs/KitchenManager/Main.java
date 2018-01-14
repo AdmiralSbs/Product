@@ -14,8 +14,8 @@ public class Main extends JFrame {
     private static Main main;
     static Font TOP_LABEL_FONT;
     private static boolean DEBUG = false;
-//    private static int widthBuffer;
-//    private static int heightBuffer;
+    private static final int widthBuffer = 50;
+    private static final int heightBuffer = 50;
 
     private static final String ACCEPTABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "-_ ";
 
@@ -64,6 +64,15 @@ public class Main extends JFrame {
 
     private void sCP(int i) {
         //System.out.println("i: " + i);
+        int xLoc = 0, yLoc = 0;
+        if (isVisible()) {
+            xLoc = getLocationOnScreen().x + (int) getSize().getWidth() / 2;
+            yLoc = getLocationOnScreen().y + (int) getSize().getHeight() / 2;
+        } else {
+            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+            xLoc = dim.width/2;
+            yLoc = dim.height/2;
+        }
         panels[i].switchedTo();
         currentPanel = panels[i];
         //System.out.println("Main is null: " + (main == null));
@@ -73,7 +82,12 @@ public class Main extends JFrame {
 //        setSize(getMinimumSize());
         setMinimumSize(new Dimension(0,0));
         pack();
-        setMinimumSize(getSize());
+        setMinimumSize(new Dimension((int) getSize().getWidth() + widthBuffer,
+                (int) getSize().getHeight() + heightBuffer));
+        setSize(getMinimumSize());
+        //if (isVisible()) {
+            setLocation(xLoc - (int) getSize().getWidth() / 2, yLoc - (int) getSize().getHeight() / 2);
+        //}
     }
 
 //    private void getBuffer() {
