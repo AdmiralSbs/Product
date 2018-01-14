@@ -60,22 +60,21 @@ public class RemoveIngredientPanel extends JPanelKitchen {
         public void actionPerformed(ActionEvent actionEvent) {
             //System.out.println("Did");
             ObjectKitchen selected = (ObjectKitchen) ingredientBox.getSelectedItem();
-            String test = ((ObjectKitchen)ingredientBox.getSelectedItem()).getName();
-
-        }
-
-        private void failed(String errorMessage) {
-            JOptionPane.showMessageDialog(getParent(),
-                    errorMessage,
-                    "Failed to",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-
-        private void succeeded(String n) {
-            JOptionPane.showMessageDialog(getParent(),
-                    "Worked 1",
-                    "Worked 2",
-                    JOptionPane.PLAIN_MESSAGE);
+            if (selected == null)
+                return;
+            else {
+                String test = (selected).getName();
+                //System.out.println(test);
+                int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + test + "?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    if (Main.getKitchen().removeIngredient((Ingredient) selected)) {
+                        JOptionPane.showMessageDialog(null, "Removed " + test);
+                        ingredientBox.removeItem(selected);
+                    }
+                    else
+                        System.out.println("Failed to remove " + test);
+                }
+            }
         }
     }
     

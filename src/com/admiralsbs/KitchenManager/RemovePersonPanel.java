@@ -64,25 +64,20 @@ public class RemovePersonPanel extends JPanelKitchen {
             if (selected == null)
                 return;
             else {
-                String test = ((ObjectKitchen) peopleBox.getSelectedItem()).getName();
-                System.out.println(test);
+                String test = (selected).getName();
+                //System.out.println(test);
+                int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + test + "?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    if (Main.getKitchen().removePerson((Person) selected)) {
+                        JOptionPane.showMessageDialog(null, "Removed " + test);
+                        peopleBox.removeItem(selected);
+                    }
+                    else
+                        System.out.println("Failed to remove " + test);
+                }
             }
-
         }
 
-        private void failed(String errorMessage) {
-            JOptionPane.showMessageDialog(getParent(),
-                    errorMessage,
-                    "Failed to",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-
-        private void succeeded(String n) {
-            JOptionPane.showMessageDialog(getParent(),
-                    "Worked 1",
-                    "Worked 2",
-                    JOptionPane.PLAIN_MESSAGE);
-        }
     }
 
 }
