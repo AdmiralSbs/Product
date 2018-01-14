@@ -41,6 +41,11 @@ public class AddRecipePanel extends JPanelKitchen {
         people = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
         selectedPeople = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
 
+        buttons[2].addActionListener(new AddIngredient());
+        buttons[3].addActionListener(new RemoveIngredient());
+        buttons[4].addActionListener(new AddPerson());
+        buttons[5].addActionListener(new RemoveIngredient());
+
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -152,7 +157,44 @@ public class AddRecipePanel extends JPanelKitchen {
     private class AddIngredient implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Ingredient ing = (Ingredient) ingredients.getSelectedItem();
+            if (ing != null) {
+                ingredients.removeItem(ing);
+                selectedIngredients.addItem(ing);
+            }
+        }
+    }
 
+    private class AddPerson implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Person peep = (Person) people.getSelectedItem();
+            if (peep != null) {
+                people.removeItem(peep);
+                selectedPeople.addItem(peep);
+            }
+        }
+    }
+
+    private class RemoveIngredient implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Ingredient ing = (Ingredient) selectedIngredients.getSelectedItem();
+            if (ing != null) {
+                selectedIngredients.removeItem(ing);
+                ingredients.addItem(ing);
+            }
+        }
+    }
+
+    private class RemovePerson implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Person peep = (Person) selectedPeople.getSelectedItem();
+            if (peep != null) {
+                selectedPeople.removeItem(peep);
+                people.addItem(peep);
+            }
         }
     }
 
