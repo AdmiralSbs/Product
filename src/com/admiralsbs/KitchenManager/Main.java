@@ -71,7 +71,9 @@ public class Main extends JFrame {
 //        setMinimumSize(new Dimension(((JPanelKitchen) getContentPane()).getBaseWidth() + widthBuffer,
 //                ((JPanelKitchen) getContentPane()).getBaseHeight() + heightBuffer));
 //        setSize(getMinimumSize());
+        setMinimumSize(new Dimension(0,0));
         pack();
+        setMinimumSize(getSize());
     }
 
 //    private void getBuffer() {
@@ -81,6 +83,7 @@ public class Main extends JFrame {
 //    }
 
     private static void findFile() {
+        new File("Kitchens").mkdir();
         File[] arrayOfFiles = (new File("Kitchens")).listFiles();
         ArrayList<String> listOfFiles = new ArrayList<>();
         if (arrayOfFiles != null) {
@@ -186,10 +189,10 @@ public class Main extends JFrame {
             //System.out.println(file.toString());
             ObjectOutputStream writer = null;
             try {
-                writer = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
                 if (file.exists())
                     file.delete();
                 file.createNewFile();
+                writer = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
             } catch (FileNotFoundException e1) {
                 System.err.println("File not found");
             }

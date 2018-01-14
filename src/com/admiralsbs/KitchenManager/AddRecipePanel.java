@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class AddRecipePanel extends JPanelKitchen {
 
@@ -131,6 +132,29 @@ public class AddRecipePanel extends JPanelKitchen {
 //            unitField.setEnabled(hasCount.isSelected());
 //        }
 //    }
+
+    @Override
+    public void switchedTo() {
+        ArrayList<ObjectKitchen> ings = new ArrayList<>();
+        ings.addAll(Main.getKitchen().getIngredients());
+        ingredients.setList(ings);
+
+        ArrayList<ObjectKitchen> peep = new ArrayList<>();
+        peep.addAll(Main.getKitchen().getPeople());
+        people.setList(peep);
+
+        selectedIngredients.setList(new ArrayList<>());
+        selectedPeople.setList(new ArrayList<>());
+
+        System.out.println("Switched to happened");
+    }
+
+    private class AddIngredient implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
 
     private class CreateRecipe implements ActionListener {
         @Override

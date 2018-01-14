@@ -105,15 +105,15 @@ public class AddIngredientPanel extends JPanelKitchen {
             String name = nameField.getText().trim();
             String unit = unitField.getText().trim();
             boolean count = hasCount.isSelected();
-            if (name.length() == 0 || (!count && unit.length() == 0))
-                return;
+            if (name.length() == 0 || (count && unit.length() == 0))
+                return; //Stop because they haven't finished
             else if (!Main.isNameAcceptable(name))
                 failed("Name can only have basic characters");
-            else if ((!count && Main.isNameAcceptable(unit))) {
+            else if ((count && !Main.isNameAcceptable(unit))) {
                 failed("Unit can only have basic characters");
-            }
-            else if (Main.getKitchen().getPerson(name) == null) {
-                if (Main.getKitchen().addIngredient(new Ingredient(name, 0, unit, (Priority) priorityJComboBox.getSelectedItem())))
+            } else if (Main.getKitchen().getPerson(name) == null) {
+                String u = (count) ? unit : "";
+                if (Main.getKitchen().addIngredient(new Ingredient(name, 0, u, (Priority) priorityJComboBox.getSelectedItem())))
                     succeeded(name);
                 else
                     failed("Unknown error");

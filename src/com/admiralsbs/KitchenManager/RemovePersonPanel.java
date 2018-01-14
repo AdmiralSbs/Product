@@ -61,7 +61,12 @@ public class RemovePersonPanel extends JPanelKitchen {
         public void actionPerformed(ActionEvent actionEvent) {
             //System.out.println("Did");
             ObjectKitchen selected = (ObjectKitchen) peopleBox.getSelectedItem();
-            String test = ((ObjectKitchen)peopleBox.getSelectedItem()).getName();
+            if (selected == null)
+                return;
+            else {
+                String test = ((ObjectKitchen) peopleBox.getSelectedItem()).getName();
+                System.out.println(test);
+            }
 
         }
 

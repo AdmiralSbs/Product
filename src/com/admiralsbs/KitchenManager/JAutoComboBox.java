@@ -5,18 +5,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 
-public class JAutoComboBox extends JComboBox<Object> {
+public class JAutoComboBox extends JComboBox<ObjectKitchen> {
 
     static final ArrayList<ObjectKitchen> ONE_ITEM_LIST = new ArrayList<>();
-    ArrayList<ObjectKitchen> baseList;
-    Vector currentList = new Vector();
+    private ArrayList<ObjectKitchen> baseList;
+    private Vector<ObjectKitchen> currentList = new Vector<>();
 
-    public JAutoComboBox(ArrayList<ObjectKitchen> l) {
+    JAutoComboBox(ArrayList<ObjectKitchen> l) {
+        super();
         setRenderer(new JListCellRenderer());
-        baseList = l;
-        Collections.addAll(currentList, baseList);
+        setList(l);
+    }
 
-        setModel(new DefaultComboBoxModel(currentList));
+    void setList(ArrayList<ObjectKitchen> l) {
+        setModel(new DefaultComboBoxModel<>(currentList));
+        baseList = l;
+        currentList.addAll(baseList);
+
         setSelectedIndex(-1);
         setEditable(true);
 
@@ -30,7 +35,7 @@ public class JAutoComboBox extends JComboBox<Object> {
 
     private void setItemsToList() {
         removeAllItems();
-        Collections.addAll(currentList, baseList);
+        currentList.addAll(baseList);
     }
 
     public void removeItem(ObjectKitchen o) {
@@ -48,22 +53,5 @@ public class JAutoComboBox extends JComboBox<Object> {
     public ArrayList<ObjectKitchen> getBaseList() {
         return baseList;
     }
-
-    public void setList(ArrayList<ObjectKitchen> l) {
-        baseList = l;
-        Collections.addAll(currentList, baseList);
-
-        setModel(new DefaultComboBoxModel(currentList));
-        setSelectedIndex(-1);
-        setEditable(true);
-
-        JTextField text = (JTextField) this.getEditor().getEditorComponent();
-        text.setFocusable(true);
-        text.setText("");
-        text.addKeyListener(new ComboListener(this, currentList));
-
-        setItemsToList();
-    }
-
 
 }
