@@ -37,4 +37,10 @@ public class UpdateKitchenPanel extends JPanelKitchen {
         add(buttons[2], c);
 
     }
+
+    @Override
+    public void switchedTo() {
+        buttons[0].setEnabled(Main.getKitchen().getIngredients().size() > 0);
+        buttons[1].setEnabled(Main.getKitchen().getRecipes().size() > 0);
+    }
 }

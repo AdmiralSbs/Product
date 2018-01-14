@@ -69,4 +69,10 @@ public class KitchenManagerPanel extends JPanelKitchen {
         add(button, c);*/
     }
 
+    @Override
+    public void switchedTo() {
+        buttons[0].setEnabled(Main.getKitchen().getRecipes().size() > 0);
+        buttons[2].setEnabled(Main.getKitchen().getIngredients().size() > 0);
+        buttons[3].setEnabled(Main.getKitchen().getIngredients().size() > 0 || Main.getKitchen().getRecipes().size() > 0);
+    }
 }
