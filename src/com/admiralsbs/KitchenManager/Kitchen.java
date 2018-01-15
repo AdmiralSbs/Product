@@ -70,12 +70,10 @@ public class Kitchen implements Serializable {
     public boolean removeRecipe(Recipe r) {
         if (recipes.contains(r)) {
             recipes.remove(r);
-            if (!(r instanceof SubRecipe)) {
+            if (!r.isSubRecipe()) { //If this recipe could be a parent
                 for (Recipe rec : recipes) {
-                    if (rec instanceof SubRecipe) {
-                        if (((SubRecipe) rec).getParentRecipe() == r) {
-                            recipes.remove(rec);
-                        }
+                    if (rec.getParentRecipe() == r) { //If the removed recipe is a parent for rec
+                        rec.setParentRecipe(null);
                     }
                 }
             }
@@ -97,24 +95,22 @@ public class Kitchen implements Serializable {
 
     public boolean addIngredient(Ingredient i) {
         if (!ingredients.contains(i)) {
-            ingredients.add(i);
-            return true;
+            return ingredients.add(i); //true
         }
         return false;
     }
 
     public boolean addRecipe(Recipe r) {
         if (!recipes.contains(r)) {
-            recipes.add(r);
-            return true;
+            return recipes.add(r); //true
         }
         return false;
     }
 
     public boolean addPerson(Person p) {
         if (!people.contains(p)) {
-            people.add(p);
-            return true;
+
+            return people.add(p); //true
         }
         return false;
     }

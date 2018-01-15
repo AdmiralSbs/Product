@@ -3,10 +3,11 @@ package com.admiralsbs.KitchenManager;
 import java.util.ArrayList;
 
 public class Recipe extends ObjectKitchen {
-    protected final String category;
+    protected String category;
     protected ArrayList<Ingredient> ingredients;
     protected ArrayList<Person> people;
     protected boolean[] mealTimes = new boolean[5]; //[Breakfast, Lunch, Dinner, Dessert, Snack]
+    private Recipe parentRecipe;
 
     public Recipe(String n, String c, ArrayList<Ingredient> ings, ArrayList<Person> peeps, boolean[] mT) {
         super(n);
@@ -14,6 +15,20 @@ public class Recipe extends ObjectKitchen {
         ingredients = ings;
         people = peeps;
         mealTimes = mT;
+        parentRecipe = null;
+    }
+
+    public Recipe(String n, String c, ArrayList<Ingredient> ings, ArrayList<Person> peeps, boolean[] mT, Recipe parRec) {
+        super(n);
+        category = c;
+        ingredients = ings;
+        people = peeps;
+        mealTimes = mT;
+        parentRecipe = parRec;
+    }
+
+    public void setCategory(String c) {
+        category = c;
     }
 
     public String getCategory() {
@@ -36,16 +51,46 @@ public class Recipe extends ObjectKitchen {
         return mealTimes[i];
     }
 
-    public int compareTo(Recipe recipe) {
-        return name.compareToIgnoreCase(recipe.getName());
+    public void setMealTime(boolean b, int i) {
+        mealTimes[i] = b;
     }
 
-    public int compareTo(SubRecipe recipe) {
-        int nameDiff = name.compareToIgnoreCase(recipe.getParentRecipe().getName());
-        if (nameDiff == 0) {
-            return -1;
-        } else {
-            return nameDiff;
+    public Recipe getParentRecipe() {
+        return parentRecipe;
+    }
+
+    public void setParentRecipe(Recipe parRec) {
+        parentRecipe = parRec;
+    }
+
+    public boolean isSubRecipe() {
+        return parentRecipe != null;
+    }
+
+    public int compareTo(Recipe recipe) {
+        if (!isSubRecipe() && !recipe.isSubRecipe()) //both have no parent
+            return name.compareToIgnoreCase(recipe.getName());
+        else if (!isSubRecipe() && recipe.isSubRecipe()) { //recipe has parent
+            int nameDiff = name.compareToIgnoreCase(recipe.getParentRecipe().getName());
+            if (nameDiff == 0)
+                return -1;
+            else
+                return nameDiff;
+        } else if (!recipe.isSubRecipe()) { //this has parent
+            int nameDiff = getParentRecipe().getName().compareToIgnoreCase(recipe.getName());
+            if (nameDiff == 0)
+                return 1;
+            else
+                return nameDiff;
+        } else { //both have parent
+            int nameDiff = getParentRecipe().getName().compareToIgnoreCase(recipe.getParentRecipe().getName());
+            if (nameDiff == 0)
+                return name.compareToIgnoreCase(recipe.getName());
+            else
+                return nameDiff;
         }
     }
+
+
+
 }
