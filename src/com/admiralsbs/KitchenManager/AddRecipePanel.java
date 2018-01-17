@@ -11,8 +11,8 @@ public class AddRecipePanel extends JPanelKitchen {
     private JTextField nameField;
     private JTextField categoryField;
     private JCheckBox[] mealSelections = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
-    private String[] meals = {"Breakfast", "Lunch", "Dinner", "Desert", "Snack"};
-    private JAutoComboBox ingredients, selectedIngredients, people, selectedPeople;
+    private String[] meals = {"Breakfast", "Lunch", "Dinner", "Dessert", "Snack"};
+    private JAutoComboBox ingredients, selectedIngredients, people, selectedPeople, parentRecipe;
 
     public AddRecipePanel() {
         topLabel = new JLabel("Add New Recipe");
@@ -26,9 +26,9 @@ public class AddRecipePanel extends JPanelKitchen {
         buttonSize = new Dimension(150, 50);
         setUp();
 
-
         JLabel nameLabel = new JLabel("Name: ");
         JLabel categoryLabel = new JLabel("Category: ");
+        JLabel parentLabel = new JLabel("Parent Recipe");
         nameField = new JTextField();
         //nameField.setColumns(50);
         nameField.setPreferredSize(new Dimension(200, 20));
@@ -40,11 +40,12 @@ public class AddRecipePanel extends JPanelKitchen {
         selectedIngredients = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
         people = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
         selectedPeople = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
+        parentRecipe = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
 
         buttons[2].addActionListener(new AddIngredient());
         buttons[3].addActionListener(new RemoveIngredient());
         buttons[4].addActionListener(new AddPerson());
-        buttons[5].addActionListener(new RemoveIngredient());
+        buttons[5].addActionListener(new RemovePerson());
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -57,7 +58,7 @@ public class AddRecipePanel extends JPanelKitchen {
 
         c.anchor = GridBagConstraints.EAST;
         c.gridwidth = 1;
-        c.gridy = 1;
+        c.gridy++;
         add(nameLabel, c);
 
         c.anchor = GridBagConstraints.WEST;
@@ -66,7 +67,7 @@ public class AddRecipePanel extends JPanelKitchen {
 
         c.anchor = GridBagConstraints.EAST;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy++;
         add(categoryLabel, c);
 
         c.anchor = GridBagConstraints.WEST;
@@ -84,6 +85,15 @@ public class AddRecipePanel extends JPanelKitchen {
             add(mealSelections[i], c);
         }
 
+        c.anchor = GridBagConstraints.EAST;
+        c.gridx = 0;
+        c.gridy++;
+        add(parentLabel, c);
+
+        c.anchor = GridBagConstraints.WEST;
+        c.gridx = 1;
+        add(parentRecipe, c);
+
         c.anchor = GridBagConstraints.CENTER;
         c.gridwidth = 2;
         c.gridx = 0;
@@ -98,7 +108,7 @@ public class AddRecipePanel extends JPanelKitchen {
         c.gridx = 2;
         c.gridy = 1;
         c.gridheight = 4;
-        add(ingredients ,c);
+        add(ingredients, c);
 
         c.gridx = 3;
         add(selectedIngredients, c);
@@ -116,7 +126,7 @@ public class AddRecipePanel extends JPanelKitchen {
         c.gridx = 2;
         c.gridy = 6;
         c.gridheight = 3;
-        add(people ,c);
+        add(people, c);
 
         c.gridx = 3;
         add(selectedPeople, c);
@@ -151,7 +161,18 @@ public class AddRecipePanel extends JPanelKitchen {
         selectedIngredients.setList(new ArrayList<>());
         selectedPeople.setList(new ArrayList<>());
 
-        System.out.println("Switched to happened");
+        ArrayList<ObjectKitchen> recs = new ArrayList<>();
+        recs.addAll(Main.getKitchen().getRecipes());
+        for (ObjectKitchen r : recs) {
+            if (((Recipe) r).isSubRecipe())
+                recs.remove(r);
+        }
+        parentRecipe.setList(recs);
+        Person na = new Person("N/A");
+        parentRecipe.addItem(na);
+        parentRecipe.setSelectedItem(na);
+
+        //System.out.println("Switched to happened");
     }
 
     private class AddIngredient implements ActionListener {
@@ -201,33 +222,48 @@ public class AddRecipePanel extends JPanelKitchen {
     private class CreateRecipe implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-//            String test = nameField.getText().trim();
-//            if (test.length() == 0)
-//                return;
-//            else if (Main.isNameAcceptable(test))
-//                failed("Name can only have basic characters");
+
+            String test = nameField.getText().trim();
+            String cat = categoryField.getText().trim();
+            boolean[] mls = new boolean[5];
+            for (int i = 0; i < 5; i++)
+                mls[i] = mealSelections[i].isSelected();
+            Recipe parRec = (parentRecipe.getSelectedItem() instanceof Person) ? null : (Recipe) parentRecipe.getSelectedItem();
+            if (test.length() == 0 || cat.length() == 0)
+                return;
+            else if (!(mls[0] || mls[1] || mls[2] || mls[3] || mls[4])) {
+                failed("Select a time");
+            }
+            else if (Main.isNameAcceptable(test))
+                failed("Name can only have basic characters");
+            else if (Main.isNameAcceptable(cat))
+                failed("Category can only have basic characters");
+            else if (selectedIngredients.getBaseList().size() == 0)
+                failed("Recipe must require at least one ingredient");
+            else if (selectedPeople.getBaseList().size() == 0)
+                failed("Recipe must require at least one person");
 //            else if (Main.getKitchen().getPerson(test) == null) {
 //                if (Main.getKitchen().addPerson(new Person(test)))
 //                    succeeded(test);
 //                else
 //                    failed("Unknown error");
 //            } else
-//                failed("Person already exists");
+//                failed("Recipe already exists");
 
         }
 
         private void failed(String errorMessage) {
-//            JOptionPane.showMessageDialog(getParent(),
-//                    errorMessage,
-//                    "Failed to create person",
-//                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(getParent(),
+                    errorMessage,
+                    "Failed to create recipe",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
         private void succeeded(String n) {
-//            JOptionPane.showMessageDialog(getParent(),
-//                    "Person " + n + " created successfully",
-//                    "Person created",
-//                    JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(getParent(),
+                    "Recipe for " + n + " created successfully",
+                    "Recipe created",
+                    JOptionPane.PLAIN_MESSAGE);
         }
     }
 }

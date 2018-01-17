@@ -125,14 +125,14 @@ public class AddIngredientPanel extends JPanelKitchen {
         private void failed(String errorMessage) {
             JOptionPane.showMessageDialog(getParent(),
                     errorMessage,
-                    "Failed to create person",
+                    "Failed to create ingredient",
                     JOptionPane.ERROR_MESSAGE);
         }
 
         private void succeeded(String n) {
             JOptionPane.showMessageDialog(getParent(),
-                    "Person " + n + " created successfully",
-                    "Person created",
+                    "Ingredient " + n + " created successfully",
+                    "Ingredient created",
                     JOptionPane.PLAIN_MESSAGE);
         }
     }
