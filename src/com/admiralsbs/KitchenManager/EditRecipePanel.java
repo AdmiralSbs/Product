@@ -6,46 +6,41 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AddRecipePanel extends JPanelKitchen {
+public class EditRecipePanel extends JPanelKitchen{
 
-    private JTextField nameField;
     private JTextField categoryField;
     private JCheckBox[] mealSelections = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
     private String[] meals = {"Breakfast", "Lunch", "Dinner", "Dessert", "Snack"};
-    private JAutoComboBox ingredients, selectedIngredients, people, selectedPeople, parentRecipe;
+    private JAutoComboBox ingredients, selectedIngredients, people, selectedPeople, parentRecipe, recipes;
 
-    public AddRecipePanel() {
+    public EditRecipePanel() {
         topLabel = new JLabel("Add New Recipe");
-        JButton[] b = {new JButton("Create Recipe"), new JButton("Back"), new JButton("Add Ingredient"),
+        JButton[] b = {new JButton("Update Recipe"), new JButton("Back"), new JButton("Add Ingredient"),
                 new JButton("Remove Ingredient"), new JButton("Add Person"), new JButton("Remove Person")};
         buttons = b;
-        buttons[0].addActionListener(new AddRecipePanel.CreateRecipe());
+        buttons[0].addActionListener(new EditRecipePanel.UpdateRecipe());
         int[] l = {-1, 1, -1, -1, -1, -1};
         locations = l;
-        //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();
 
-        JLabel nameLabel = new JLabel("Name: ");
+        JLabel nameLabel = new JLabel("Recipe: ");
         JLabel categoryLabel = new JLabel("Category: ");
         JLabel parentLabel = new JLabel("Parent Recipe");
-        nameField = new JTextField();
-        //nameField.setColumns(50);
-        nameField.setPreferredSize(new Dimension(200, 20));
         categoryField = new JTextField();
-        //categoryField.setColumns(50);
         categoryField.setPreferredSize(new Dimension(200, 20));
 
+        recipes = new JAutoComboBox();
         ingredients = new JAutoComboBox();
         selectedIngredients = new JAutoComboBox();
         people = new JAutoComboBox();
         selectedPeople = new JAutoComboBox();
         parentRecipe = new JAutoComboBox();
 
-        buttons[2].addActionListener(new AddIngredient());
-        buttons[3].addActionListener(new RemoveIngredient());
-        buttons[4].addActionListener(new AddPerson());
-        buttons[5].addActionListener(new RemovePerson());
+        buttons[2].addActionListener(new EditRecipePanel.AddIngredient());
+        buttons[3].addActionListener(new EditRecipePanel.RemoveIngredient());
+        buttons[4].addActionListener(new EditRecipePanel.AddPerson());
+        buttons[5].addActionListener(new EditRecipePanel.RemovePerson());
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -63,7 +58,7 @@ public class AddRecipePanel extends JPanelKitchen {
 
         c.anchor = GridBagConstraints.WEST;
         c.gridx = 1;
-        add(nameField, c);
+        add(recipes, c);
 
         c.anchor = GridBagConstraints.EAST;
         c.gridx = 0;
@@ -221,40 +216,34 @@ public class AddRecipePanel extends JPanelKitchen {
         }
     }
 
-    private class CreateRecipe implements ActionListener {
+    private class UpdateRecipe implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            String test = nameField.getText().trim();
+            Recipe rec = (Recipe) recipes.getSelectedItem();
             String cat = categoryField.getText().trim();
             boolean[] mls = new boolean[5];
             for (int i = 0; i < 5; i++)
                 mls[i] = mealSelections[i].isSelected();
             Recipe parRec = (parentRecipe.getSelectedItem() instanceof Person) ? null : (Recipe) parentRecipe.getSelectedItem();
-            if (test.length() == 0 || cat.length() == 0)
+            if (cat.length() == 0)
                 return;
             else if (!(mls[0] || mls[1] || mls[2] || mls[3] || mls[4]))
                 failed("Select a time");
-            else if (!Main.isNameAcceptable(test))
-                failed("Name can only have basic characters");
-            else if (!Main.isNameAcceptable(cat))
+            else if (Main.isNameAcceptable(cat))
                 failed("Category can only have basic characters");
             else if (selectedIngredients.getBaseList().size() == 0)
                 failed("Recipe must require at least one ingredient");
             else if (selectedPeople.getBaseList().size() == 0)
                 failed("Recipe must require at least one person");
-            else if (Main.getKitchen().getRecipe(test) == null) {
+            else {
                 ArrayList<Ingredient> ings = new ArrayList<>();
                 ArrayList<Person> peeps = new ArrayList<>();
                 for (ObjectKitchen ok : selectedIngredients.getBaseList())
                     ings.add((Ingredient) ok);
                 for (ObjectKitchen ok : selectedPeople.getBaseList())
                     peeps.add((Person) ok);
-                if (Main.getKitchen().addRecipe(new Recipe(test, cat, ings, peeps, mls, parRec)))
-                    succeeded(test);
-                else
-                    failed("Unknown error");
-            } else
-                failed("Recipe already exists");
+                //Change all values
+            }
 
         }
 

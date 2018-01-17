@@ -21,7 +21,7 @@ public class RemoveIngredientPanel extends JPanelKitchen {
         buttonSize = new Dimension(150, 50);
         setUp();
 
-        ingredientBox = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
+        ingredientBox = new JAutoComboBox();
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

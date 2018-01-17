@@ -28,6 +28,8 @@ public class Main extends JFrame {
         panels[1] = new KitchenEditorPanel();
         panels[2] = new UpdateKitchenPanel();
 
+
+        panels[6] = new EditRecipePanel();
         panels[7] = new AddIngredientPanel();
         panels[8] = new AddRecipePanel();
         panels[9] = new AddPersonPanel();
@@ -39,10 +41,10 @@ public class Main extends JFrame {
 
     public static void main(String[] args) {
         findFile();
-        JAutoComboBox.ONE_ITEM_LIST.add(new Person("!@#"));
+        //JAutoComboBox.ONE_ITEM_LIST.add(new Person("!@#"));
 
         main = new Main();
-        main.setLocation(100, 100);
+        //main.setLocation(100, 100);
         main.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         main.addWindowListener(new WindowClose());
         main.pack();
@@ -191,11 +193,6 @@ public class Main extends JFrame {
 
     private static class WindowClose implements WindowListener {
         @Override
-        public void windowOpened(WindowEvent windowEvent) {
-
-        }
-
-        @Override
         public void windowClosing(WindowEvent windowEvent) {
             File file = new File("Kitchens" + File.separator + kitchen.getOwner() + ".kitchen");
 
@@ -226,28 +223,22 @@ public class Main extends JFrame {
         }
 
         @Override
-        public void windowClosed(WindowEvent windowEvent) {
-
+        public void windowOpened(WindowEvent windowEvent) {
         }
-
+        @Override
+        public void windowClosed(WindowEvent windowEvent) {
+        }
         @Override
         public void windowIconified(WindowEvent windowEvent) {
-
         }
-
         @Override
         public void windowDeiconified(WindowEvent windowEvent) {
-
         }
-
         @Override
         public void windowActivated(WindowEvent windowEvent) {
-
         }
-
         @Override
         public void windowDeactivated(WindowEvent windowEvent) {
-
         }
     }
 }

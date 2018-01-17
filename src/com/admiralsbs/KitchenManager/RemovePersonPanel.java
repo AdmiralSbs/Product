@@ -22,7 +22,7 @@ public class RemovePersonPanel extends JPanelKitchen {
         buttonSize = new Dimension(150, 50);
         setUp();
 
-        peopleBox = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
+        peopleBox = new JAutoComboBox();
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

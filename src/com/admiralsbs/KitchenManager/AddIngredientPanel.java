@@ -111,7 +111,7 @@ public class AddIngredientPanel extends JPanelKitchen {
                 failed("Name can only have basic characters");
             else if ((count && !Main.isNameAcceptable(unit))) {
                 failed("Unit can only have basic characters");
-            } else if (Main.getKitchen().getPerson(name) == null) {
+            } else if (Main.getKitchen().getIngredient(name) == null) {
                 String u = (count) ? unit : "";
                 if (Main.getKitchen().addIngredient(new Ingredient(name, 0, u, (Priority) priorityJComboBox.getSelectedItem())))
                     succeeded(name);

@@ -21,7 +21,7 @@ public class RemoveRecipePanel extends JPanelKitchen {
         buttonSize = new Dimension(150, 50);
         setUp();
 
-        recipeBox = new JAutoComboBox(JAutoComboBox.ONE_ITEM_LIST);
+        recipeBox = new JAutoComboBox();
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

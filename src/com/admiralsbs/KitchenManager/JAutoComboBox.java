@@ -7,28 +7,40 @@ import java.util.Vector;
 
 public class JAutoComboBox extends JComboBox<ObjectKitchen> {
 
-    static final ArrayList<ObjectKitchen> ONE_ITEM_LIST = new ArrayList<>();
+    //static final ArrayList<ObjectKitchen> ONE_ITEM_LIST = new ArrayList<>();
     private ArrayList<ObjectKitchen> baseList;
     private Vector<ObjectKitchen> currentList = new Vector<>();
+    private JTextField text;
+
+    JAutoComboBox() {
+        super();
+        setRenderer(new JListCellRenderer());
+        setModel(new DefaultComboBoxModel<>(currentList));
+        text = (JTextField) this.getEditor().getEditorComponent();
+        text.setFocusable(true);
+        text.addKeyListener(new ComboListener(this, currentList));
+        setList(new ArrayList<>());
+    }
 
     JAutoComboBox(ArrayList<ObjectKitchen> l) {
         super();
         setRenderer(new JListCellRenderer());
+        setModel(new DefaultComboBoxModel<>(currentList));
+        text = (JTextField) this.getEditor().getEditorComponent();
+        text.setFocusable(true);
+        text.addKeyListener(new ComboListener(this, currentList));
         setList(l);
     }
 
     void setList(ArrayList<ObjectKitchen> l) {
-        setModel(new DefaultComboBoxModel<>(currentList));
+        currentList.removeAllElements();
         baseList = l;
         currentList.addAll(baseList);
 
         setSelectedIndex(-1);
         setEditable(true);
 
-        JTextField text = (JTextField) this.getEditor().getEditorComponent();
-        text.setFocusable(true);
         text.setText("");
-        text.addKeyListener(new ComboListener(this, currentList));
 
         setItemsToList();
     }
@@ -36,11 +48,15 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
     private void setItemsToList() {
         removeAllItems();
         currentList.addAll(baseList);
+        setSelectedIndex(-1);
+        text.setText("");
     }
 
     public void removeItem(ObjectKitchen o) {
         baseList.remove(o);
         super.removeItem(o);
+        setSelectedIndex(-1);
+        text.setText("");
     }
 
     public void addItem(ObjectKitchen o) {
