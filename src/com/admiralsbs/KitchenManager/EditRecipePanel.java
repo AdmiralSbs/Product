@@ -31,6 +31,7 @@ public class EditRecipePanel extends JPanelKitchen{
         categoryField.setPreferredSize(new Dimension(200, 20));
 
         recipes = new JAutoComboBox();
+        recipes.addActionListener(new RecipeSelected());
         ingredients = new JAutoComboBox();
         selectedIngredients = new JAutoComboBox();
         people = new JAutoComboBox();
@@ -163,11 +164,41 @@ public class EditRecipePanel extends JPanelKitchen{
                 recs.remove(r);
         }
         parentRecipe.setList(recs);
-        Person na = new Person("N/A");
-        parentRecipe.addItem(na);
-        parentRecipe.setSelectedItem(na);
+        parentRecipe.addItem(Main.NA);
+        parentRecipe.setSelectedItem(Main.NA);
 
         //System.out.println("Switched to happened");
+    }
+
+    private class RecipeSelected implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            Recipe rec = (Recipe) recipes.getSelectedItem();
+            categoryField.setText(rec.getCategory());
+            for (int i = 0; i < 5; i++)
+                mealSelections[i].setSelected(rec.getMealTime(i));
+            ArrayList<ObjectKitchen> ings = new ArrayList<>(), peeps = new ArrayList<>(), ingsAll = new ArrayList<>(), peepsAll = new ArrayList<>();
+            ings.addAll(rec.getIngredients());
+            selectedIngredients.setList(ings);
+
+            peeps.addAll(rec.getPeople());
+            selectedPeople.setList(peeps);
+
+            ingsAll.addAll(Main.getKitchen().getIngredients());
+            ingsAll.removeAll(ings);
+
+            peepsAll.addAll(Main.getKitchen().getPeople());
+            peepsAll.removeAll(peeps);
+
+            ingredients.setList(ingsAll);
+            people.setList(peepsAll);
+
+            if (rec.getParentRecipe() != null) {
+                parentRecipe.setSelectedItem(rec.getParentRecipe());
+            } else {
+                parentRecipe.setSelectedItem(Main.NA);
+            }
+        }
     }
 
     private class AddIngredient implements ActionListener {

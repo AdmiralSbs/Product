@@ -16,6 +16,7 @@ public class Main extends JFrame {
     private static boolean DEBUG = false;
     private static final int widthBuffer = 50;
     private static final int heightBuffer = 50;
+    static final Person NA = new Person("N/A");
 
     private static final String ACCEPTABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "-_ ";
 
