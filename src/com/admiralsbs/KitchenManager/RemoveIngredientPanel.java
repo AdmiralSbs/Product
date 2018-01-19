@@ -51,7 +51,6 @@ public class RemoveIngredientPanel extends JPanelKitchen {
             //System.out.println(p.getName());
         }
         ingredientBox.setList(peep);
-        System.out.println("Switched to happened");
 
     }
 

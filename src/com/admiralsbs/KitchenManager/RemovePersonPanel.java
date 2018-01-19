@@ -52,8 +52,6 @@ public class RemovePersonPanel extends JPanelKitchen {
             //System.out.println(p.getName());
         }
         peopleBox.setList(peep);
-        System.out.println("Switched to happened");
-
     }
 
     private class RemovePerson implements ActionListener {

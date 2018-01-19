@@ -179,7 +179,7 @@ public class AddRecipePanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent e) {
             Ingredient ing = (Ingredient) ingredients.getSelectedItem();
-            //System.out.println(ing.getCount());
+            System.out.println(ing.getCount());
             if (ing != null) {
                 ingredients.removeItem(ing);
                 selectedIngredients.addItem(ing);
@@ -202,7 +202,7 @@ public class AddRecipePanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent e) {
             Ingredient ing = (Ingredient) selectedIngredients.getSelectedItem();
-            //System.out.println(ing.getCount());
+            System.out.println(ing.getCount());
             if (ing != null) {
                 selectedIngredients.removeItem(ing);
                 ingredients.addItem(ing);
@@ -239,9 +239,9 @@ public class AddRecipePanel extends JPanelKitchen {
             else if (!Main.isNameAcceptable(cat))
                 failed("Category can only have basic characters");
             else if (selectedIngredients.getBaseList().size() == 0)
-                failed("Recipe must require at least one ingredient");
+                failed("Recipe requires at least one ingredient");
             else if (selectedPeople.getBaseList().size() == 0)
-                failed("Recipe must require at least one person");
+                failed("Recipe requires at least one person");
             else if (Main.getKitchen().getRecipe(test) == null) {
                 ArrayList<Ingredient> ings = new ArrayList<>();
                 ArrayList<Person> peeps = new ArrayList<>();

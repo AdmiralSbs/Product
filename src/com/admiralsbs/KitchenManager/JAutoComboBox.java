@@ -2,7 +2,6 @@ package com.admiralsbs.KitchenManager;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Vector;
 
 public class JAutoComboBox extends JComboBox<ObjectKitchen> {
@@ -11,28 +10,31 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
     private ArrayList<ObjectKitchen> baseList;
     private Vector<ObjectKitchen> currentList = new Vector<>();
     private JTextField text;
+    private JComboListener listener;
 
     JAutoComboBox() {
         super();
         setRenderer(new JListCellRenderer());
-        setModel(new DefaultComboBoxModel<>(currentList));
+        //setModel(new DefaultComboBoxModel<>(currentList));
         text = (JTextField) this.getEditor().getEditorComponent();
         text.setFocusable(true);
-        text.addKeyListener(new ComboListener(this, currentList));
+        listener = new JComboListener(this, currentList);
+        text.addKeyListener(listener);
         setList(new ArrayList<>());
     }
 
     JAutoComboBox(ArrayList<ObjectKitchen> l) {
         super();
         setRenderer(new JListCellRenderer());
-        setModel(new DefaultComboBoxModel<>(currentList));
+        //setModel(new DefaultComboBoxModel<>(currentList));
         text = (JTextField) this.getEditor().getEditorComponent();
         text.setFocusable(true);
-        text.addKeyListener(new ComboListener(this, currentList));
+
         setList(l);
     }
 
     void setList(ArrayList<ObjectKitchen> l) {
+        //setModel(new DefaultComboBoxModel<>(currentList));
         currentList.removeAllElements();
         baseList = l;
         currentList.addAll(baseList);
@@ -41,20 +43,26 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
         setEditable(true);
 
         text.setText("");
+        text.addKeyListener(new JComboListener(this, currentList));
+        setModel(new DefaultComboBoxModel<>(currentList));
 
         setItemsToList();
     }
 
     private void setItemsToList() {
-        removeAllItems();
+        //removeAllItems();
+        currentList.removeAllElements();
         currentList.addAll(baseList);
+        setModel(new DefaultComboBoxModel<>(currentList));
         setSelectedIndex(-1);
         text.setText("");
     }
 
     public void removeItem(ObjectKitchen o) {
-        baseList.remove(o);
-        super.removeItem(o);
+        System.out.println(baseList.remove(o));
+        //super.removeItem(o);
+        System.out.println(currentList.remove(o));
+        setModel(new DefaultComboBoxModel<>(currentList));
         setSelectedIndex(-1);
         text.setText("");
     }
@@ -69,5 +77,7 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
     public ArrayList<ObjectKitchen> getBaseList() {
         return baseList;
     }
+
+    public Vector<ObjectKitchen> getCurrentList() { return currentList; }
 
 }
