@@ -157,21 +157,20 @@ public class EditRecipePanel extends JPanelKitchen{
         selectedIngredients.setList(new ArrayList<>());
         selectedPeople.setList(new ArrayList<>());
 
-        ArrayList<ObjectKitchen> recs = new ArrayList<>();
+        ArrayList<ObjectKitchen> recs = new ArrayList<>(), recs2 = new ArrayList<>();;
         recs.addAll(Main.getKitchen().getRecipes());
+        recipes.setList(recs);
 
         for (ObjectKitchen r : recs) {
-            if (((Recipe) r).isSubRecipe())
-                recs.remove(r);
+            if (!((Recipe) r).isSubRecipe())
+                recs2.add(r);
         }
 
-        parentRecipe.setList(recs);
+        parentRecipe.setList(recs2);
         parentRecipe.addItem(Main.NA);
         parentRecipe.setSelectedItem(Main.NA);
 
-        ArrayList<ObjectKitchen> recs2 = new ArrayList<>();
-        recs2.addAll(Main.getKitchen().getRecipes());
-        recipes.setList(recs2);
+
 
         //System.out.println("Switched to happened");
     }
@@ -273,6 +272,9 @@ public class EditRecipePanel extends JPanelKitchen{
                 failed("Recipe requires at least one ingredient");
             else if (selectedPeople.getBaseList().size() == 0)
                 failed("Recipe requires at least one person");
+            else if (parRec == rec) {
+                failed("Recipe cannot be its own parent recipe");
+            }
             else {
                 ArrayList<Ingredient> ings = new ArrayList<>();
                 ArrayList<Person> peeps = new ArrayList<>();
@@ -282,22 +284,27 @@ public class EditRecipePanel extends JPanelKitchen{
                     peeps.add((Person) ok);
                 for (int i = 0; i < 5; i++)
                     rec.setMealTime(mls[i], i);
-                
+                rec.setCategory(cat);
+                rec.setParentRecipe(parRec);
+                rec.getIngredients().clear();
+                rec.getIngredients().addAll(ings);
+                rec.getPeople().clear();
+                rec.getPeople().addAll(peeps);
+                succeeded(rec.getName());
             }
-
         }
 
         private void failed(String errorMessage) {
             JOptionPane.showMessageDialog(getParent(),
                     errorMessage,
-                    "Failed to create recipe",
+                    "Failed to update recipe",
                     JOptionPane.ERROR_MESSAGE);
         }
 
         private void succeeded(String n) {
             JOptionPane.showMessageDialog(getParent(),
-                    "Recipe for " + n + " created successfully",
-                    "Recipe created",
+                    "Recipe " + n + " updated successfully",
+                    "Recipe updated",
                     JOptionPane.PLAIN_MESSAGE);
         }
     }
