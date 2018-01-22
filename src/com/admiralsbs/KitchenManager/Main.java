@@ -29,7 +29,7 @@ public class Main extends JFrame {
         panels[1] = new KitchenEditorPanel();
         panels[2] = new UpdateKitchenPanel();
 
-
+        panels[5] = new UpdateIngredientPanel();
         panels[6] = new EditRecipePanel();
         panels[7] = new AddIngredientPanel();
         panels[8] = new AddRecipePanel();

@@ -1,9 +1,12 @@
 package com.admiralsbs.KitchenManager;
 
-public class Ingredient extends ObjectKitchen {
-    private final String unit;
+import java.io.Serializable;
+
+public class Ingredient extends ObjectKitchen implements Serializable {
+    private static final long serialVersionUID = -4L;
+    private String unit;
     private int count;
-    private final Priority priority;
+    private Priority priority;
 
     public Ingredient(String n, int c, String u, Priority p) {
         super(n);
@@ -18,6 +21,18 @@ public class Ingredient extends ObjectKitchen {
 
     public String getUnit() {
         return unit;
+    }
+
+    public void setUnit(String u) {
+        unit = u;
+        if (u.equals(""))
+            count = -1;
+        else if (count < 0)
+            count = 0;
+    }
+
+    public void setPriority(Priority p) {
+        priority = p;
     }
 
     public Priority getPriority() {

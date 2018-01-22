@@ -170,8 +170,6 @@ public class EditRecipePanel extends JPanelKitchen{
         parentRecipe.addItem(Main.NA);
         parentRecipe.setSelectedItem(Main.NA);
 
-
-
         //System.out.println("Switched to happened");
     }
 
@@ -257,6 +255,7 @@ public class EditRecipePanel extends JPanelKitchen{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             Recipe rec = (Recipe) recipes.getSelectedItem();
+            if (rec == null) return;
             String cat = categoryField.getText().trim();
             boolean[] mls = new boolean[5];
             for (int i = 0; i < 5; i++)
