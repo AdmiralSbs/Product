@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public abstract class ObjectKitchen implements Serializable {
+    private static final long serialVersionUID = -2L;
 
     protected final String name;
 

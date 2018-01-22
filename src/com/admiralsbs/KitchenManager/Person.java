@@ -1,6 +1,9 @@
 package com.admiralsbs.KitchenManager;
 
-public class Person extends ObjectKitchen {
+import java.io.Serializable;
+
+public class Person extends ObjectKitchen implements Serializable {
+    private static final long serialVersionUID = -5L;
 
     public Person(String n) { super(n); }
 

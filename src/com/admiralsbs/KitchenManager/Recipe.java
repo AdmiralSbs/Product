@@ -1,8 +1,11 @@
 package com.admiralsbs.KitchenManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Recipe extends ObjectKitchen {
+public class Recipe extends ObjectKitchen implements Serializable {
+    private static final long serialVersionUID = -3L;
+
     protected String category;
     protected ArrayList<Ingredient> ingredients;
     protected ArrayList<Person> people;
