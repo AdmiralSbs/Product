@@ -1,6 +1,8 @@
 package com.admiralsbs.KitchenManager;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +12,7 @@ public class ViewKitchenPanel extends JPanelKitchen {
 
     JCheckBox[] checkBoxes = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
     JListKitchen ingredientsList = new JListKitchen();
-    JLabel status = new JLabel();
+    JLabel status = new JLabel(" ");
 
     public ViewKitchenPanel() {
         topLabel = new JLabel("View Kitchen");
@@ -28,6 +30,7 @@ public class ViewKitchenPanel extends JPanelKitchen {
         JLabel availableLabel = new JLabel("Available: ");
         JLabel missingLabel = new JLabel("Missing: ");
         JLabel ingredientsLabel = new JLabel("Ingredients");
+        ingredientsList.addListSelectionListener(new IngredientSelected());
 
         for (int i = 0; i < 5; i++)
             checkBoxes[i].addActionListener(new BoxChanged(i));
@@ -47,8 +50,9 @@ public class ViewKitchenPanel extends JPanelKitchen {
 
         c.anchor = GridBagConstraints.NORTHWEST;
         c.gridy++;
-        c.gridheight = 5;
+        c.gridheight = 4;
         add(ingredientsList, c);
+
 
         c.gridheight = 1;
         c.gridy = 0;
@@ -104,6 +108,11 @@ public class ViewKitchenPanel extends JPanelKitchen {
         add(checkBoxes[4], c);
 
         c.anchor = GridBagConstraints.CENTER;
+        c.gridwidth = 2;
+        c.gridx = 1;
+        c.gridy++;
+        add(status, c);
+
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy++;
@@ -169,5 +178,20 @@ public class ViewKitchenPanel extends JPanelKitchen {
             return false;
         i = (ing.isAvailable()) ? 3 : 4;
         return checkBoxes[i].isSelected();
+    }
+
+    private class IngredientSelected implements ListSelectionListener {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            Ingredient ing = (Ingredient) ingredientsList.getSelectedValue();
+            if (ing == null) return;
+            int count = ing.getCount();
+            if (count > 0)
+                status.setText(count + " " + ing.getUnit());
+            else if (count == 0)
+                status.setText("Missing");
+            else
+                status.setText((ing.isAvailable()) ? "Available" : "Missing");
+        }
     }
 }

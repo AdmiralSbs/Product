@@ -1,6 +1,7 @@
 package com.admiralsbs.KitchenManager;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import java.util.ArrayList;
 
 public class JListKitchen extends JList<ObjectKitchen> {
@@ -17,7 +18,6 @@ public class JListKitchen extends JList<ObjectKitchen> {
 
     void setList(ArrayList<ObjectKitchen> l) {
         defaultListModel.removeAllElements();
-        System.out.println(defaultListModel.getSize());
         baseList = l;
         for (ObjectKitchen ok : baseList)
             defaultListModel.addElement(ok);
