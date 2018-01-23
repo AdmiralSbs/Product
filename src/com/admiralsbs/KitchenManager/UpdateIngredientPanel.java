@@ -10,7 +10,7 @@ public class UpdateIngredientPanel extends JPanelKitchen {
 
     private JAutoComboBox nameComboBox;
     private JTextField unitField, countField;
-    private JCheckBox hasCount;
+    private JCheckBox hasCount, isAvailable;
     private JComboBox<Priority> priorityJComboBox;
 
     public UpdateIngredientPanel() {
@@ -29,6 +29,7 @@ public class UpdateIngredientPanel extends JPanelKitchen {
         JLabel hasCountLabel = new JLabel("Has Count: ");
         JLabel unitLabel = new JLabel("Unit: ");
         JLabel priorityLabel = new JLabel("Priority: ");
+        JLabel isAvailableLabel = new JLabel("Is Available");
 
         nameComboBox = new JAutoComboBox();
 
@@ -39,6 +40,8 @@ public class UpdateIngredientPanel extends JPanelKitchen {
         hasCount = new JCheckBox();
         hasCount.setSelected(true);
         hasCount.addActionListener(new UpdateIngredientPanel.SwapCheckBox());
+        isAvailable = new JCheckBox();
+        isAvailable.setEnabled(false);
 
         Priority[] pris = {Priority.LOW, Priority.MEDIUM, Priority.HIGH};
         priorityJComboBox = new JComboBox<>(pris);
@@ -91,6 +94,15 @@ public class UpdateIngredientPanel extends JPanelKitchen {
         c.anchor = GridBagConstraints.EAST;
         c.gridx = 0;
         c.gridy++;
+        add(isAvailableLabel, c);
+
+        c.anchor = GridBagConstraints.WEST;
+        c.gridx = 1;
+        add(isAvailable, c);
+
+        c.anchor = GridBagConstraints.EAST;
+        c.gridx = 0;
+        c.gridy++;
         add(priorityLabel, c);
 
         c.anchor = GridBagConstraints.WEST;
@@ -120,6 +132,10 @@ public class UpdateIngredientPanel extends JPanelKitchen {
         public void actionPerformed(ActionEvent actionEvent) {
             unitField.setEnabled(hasCount.isSelected());
             countField.setEnabled(hasCount.isSelected());
+            isAvailable.setEnabled(!hasCount.isSelected());
+            Ingredient ing = (Ingredient) nameComboBox.getSelectedItem();
+            if (ing == null) return;
+            isAvailable.setSelected(ing.getCount() >= 1 || ing.getCount() == -1);
         }
     }
 
@@ -132,10 +148,13 @@ public class UpdateIngredientPanel extends JPanelKitchen {
             hasCount.setSelected(!c);
             countField.setEnabled(!c);
             unitField.setEnabled(!c);
+            isAvailable.setEnabled(c);
             unitField.setText(ing.getUnit());
-            System.out.println(ing.getCount() + "");
+            //System.out.println(ing.getCount() + "");
             countField.setText((!c) ? ing.getCount() + "" : "");
             priorityJComboBox.setSelectedItem(ing.getPriority());
+            isAvailable.setSelected(ing.getCount() >= 1 || ing.getCount() == -1);
+
         }
     }
 
@@ -145,6 +164,7 @@ public class UpdateIngredientPanel extends JPanelKitchen {
             Ingredient ing = (Ingredient) nameComboBox.getSelectedItem();
             String unit = unitField.getText().trim();
             boolean c = hasCount.isSelected();
+            boolean a = isAvailable.isSelected();
             int count = 0;
             if (c) {
                 try {
@@ -162,6 +182,7 @@ public class UpdateIngredientPanel extends JPanelKitchen {
                 failed("Count must be at least 0");
             } else {
                 if (c) ing.setCount(count);
+                else ing.setCount((a) ? -1 : -2);
                 String u = (c) ? unit : "";
                 ing.setUnit(u);
                 ing.setPriority((Priority) priorityJComboBox.getSelectedItem());

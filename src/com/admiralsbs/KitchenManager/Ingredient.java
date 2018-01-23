@@ -11,7 +11,7 @@ public class Ingredient extends ObjectKitchen implements Serializable {
     public Ingredient(String n, int c, String u, Priority p) {
         super(n);
         count = c;
-        unit = u;
+        setUnit(u);
         priority = p;
     }
 
@@ -25,9 +25,12 @@ public class Ingredient extends ObjectKitchen implements Serializable {
 
     public void setUnit(String u) {
         unit = u;
-        if (u.equals(""))
-            count = -1;
-        else if (count < 0)
+        if (u.equals("")) {
+            if (count > 0)
+                count = -1;
+            else if (count == 0)
+                count = -2;
+        } else if (count < 0)
             count = 0;
     }
 
@@ -40,20 +43,21 @@ public class Ingredient extends ObjectKitchen implements Serializable {
     }
 
     public void setCount(int i) {
-        if (count == -1)
-            return;
-        if (i >= 0)
-            count = i;
+        count = i;
     }
 
     public void changeCount(int i) {
-        if (count == -1)
+        if (count == -1 || count == -2)
             return;
         count += i;
     }
 
     public int compareTo(Ingredient i) {
         return name.compareToIgnoreCase(i.getName());
+    }
+
+    public boolean isAvailable() {
+        return (count >= 1 || count == -1);
     }
 
 }

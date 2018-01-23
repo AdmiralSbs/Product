@@ -29,6 +29,7 @@ public class Main extends JFrame {
         panels[1] = new KitchenEditorPanel();
         panels[2] = new UpdateKitchenPanel();
 
+        panels[4] = new ViewKitchenPanel();
         panels[5] = new UpdateIngredientPanel();
         panels[6] = new EditRecipePanel();
         panels[7] = new AddIngredientPanel();
@@ -51,8 +52,6 @@ public class Main extends JFrame {
         main.pack();
         main.setVisible(true);
         while (DEBUG) {
-            //System.out.print(currentPanel.getWidth() + ", " + currentPanel.getHeight() + "; ");
-            //System.out.println(main.getWidth() + ", " + main.getHeight());
             try {
                 Thread.sleep(1000);
             } catch (Exception ignored) {
@@ -66,7 +65,6 @@ public class Main extends JFrame {
     }
 
     private void sCP(int i) {
-        //System.out.println("i: " + i);
         int xLoc = 0, yLoc = 0;
         if (isVisible()) {
             xLoc = getLocationOnScreen().x + (int) getSize().getWidth() / 2;
@@ -78,7 +76,6 @@ public class Main extends JFrame {
         }
         panels[i].switchedTo();
         currentPanel = panels[i];
-        //System.out.println("Main is null: " + (main == null));
         setContentPane(currentPanel);
 //        setMinimumSize(new Dimension(((JPanelKitchen) getContentPane()).getBaseWidth() + widthBuffer,
 //                ((JPanelKitchen) getContentPane()).getBaseHeight() + heightBuffer));
@@ -150,14 +147,11 @@ public class Main extends JFrame {
                     choice = null;
                 }
             }
-            //System.out.println(choice);
             kitchen = new Kitchen(choice);
         } else {
             ObjectInputStream reader = null;
-            //System.out.println(choice);
             try {
                 File file = new File("Kitchens" + File.separator + choice + ".kitchen");
-                //System.out.println(file.toString());
                 FileInputStream r1 = new FileInputStream(file);
                 BufferedInputStream r2 = new BufferedInputStream(r1);
                 reader = new ObjectInputStream(r1);
@@ -197,8 +191,6 @@ public class Main extends JFrame {
         public void windowClosing(WindowEvent windowEvent) {
             File file = new File("Kitchens" + File.separator + kitchen.getOwner() + ".kitchen");
 
-            //System.out.println(kitchen.getOwner());
-            //System.out.println(file.toString());
             ObjectOutputStream writer = null;
             try {
                 if (file.exists())
@@ -211,7 +203,6 @@ public class Main extends JFrame {
             catch (Exception e) {
                 e.printStackTrace();
             }
-            //System.out.println((kitchen == null));
             try {
                 writer.writeObject(kitchen);
                 writer.close();

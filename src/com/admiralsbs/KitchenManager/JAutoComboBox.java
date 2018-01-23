@@ -23,15 +23,15 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
         setList(new ArrayList<>());
     }
 
-    JAutoComboBox(ArrayList<ObjectKitchen> l) {
-        super();
-        setRenderer(new JListCellRenderer());
-        //setModel(new DefaultComboBoxModel<>(currentList));
-        text = (JTextField) this.getEditor().getEditorComponent();
-        text.setFocusable(true);
-
-        setList(l);
-    }
+//    JAutoComboBox(ArrayList<ObjectKitchen> l) {
+//        super();
+//        setRenderer(new JListCellRenderer());
+//        //setModel(new DefaultComboBoxModel<>(currentList));
+//        text = (JTextField) this.getEditor().getEditorComponent();
+//        text.setFocusable(true);
+//
+//        setList(l);
+//    }
 
     void setList(ArrayList<ObjectKitchen> l) {
         //setModel(new DefaultComboBoxModel<>(currentList));
