@@ -59,9 +59,9 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
     }
 
     public void removeItem(ObjectKitchen o) {
-        System.out.println(baseList.remove(o));
+        //System.out.println(baseList.remove(o));
         //super.removeItem(o);
-        System.out.println(currentList.remove(o));
+        //System.out.println(currentList.remove(o));
         setModel(new DefaultComboBoxModel<>(currentList));
         setSelectedIndex(-1);
         text.setText("");

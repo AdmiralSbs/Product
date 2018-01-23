@@ -150,7 +150,6 @@ public class UpdateIngredientPanel extends JPanelKitchen {
             unitField.setEnabled(!c);
             isAvailable.setEnabled(c);
             unitField.setText(ing.getUnit());
-            //System.out.println(ing.getCount() + "");
             countField.setText((!c) ? ing.getCount() + "" : "");
             priorityJComboBox.setSelectedItem(ing.getPriority());
             isAvailable.setSelected(ing.getCount() >= 1 || ing.getCount() == -1);

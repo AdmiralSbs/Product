@@ -20,7 +20,6 @@ public class ViewKitchenPanel extends JPanelKitchen {
         buttons = b;
         int[] l = {0};
         locations = l;
-        //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();
 
