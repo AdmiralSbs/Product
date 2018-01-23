@@ -3,13 +3,12 @@ package com.admiralsbs.KitchenManager;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class JComboListener extends KeyAdapter {
 
-    JAutoComboBox comboBox;
-    Vector<ObjectKitchen> items;
+    private final JAutoComboBox comboBox;
+    private final Vector<ObjectKitchen> items;
 
     public JComboListener(JAutoComboBox jacb, Vector v) {
         super();
@@ -23,7 +22,7 @@ public class JComboListener extends KeyAdapter {
         kR(text);
     }
 
-    public void kR (String text) {
+    private void kR(String text) {
         Vector<ObjectKitchen> newV = getFilteredList(text);
         comboBox.setModel(new DefaultComboBoxModel<>(newV));
         comboBox.setSelectedIndex(-1);
@@ -31,7 +30,7 @@ public class JComboListener extends KeyAdapter {
         comboBox.showPopup();
     }
 
-    public Vector<ObjectKitchen> getFilteredList(String text) {
+    private Vector<ObjectKitchen> getFilteredList(String text) {
         Vector<ObjectKitchen> v = new Vector();
         for (ObjectKitchen o : items) {
             if (o.getName().toLowerCase().startsWith(text.toLowerCase())) {

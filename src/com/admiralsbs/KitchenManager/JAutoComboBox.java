@@ -8,9 +8,8 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
 
     //static final ArrayList<ObjectKitchen> ONE_ITEM_LIST = new ArrayList<>();
     private ArrayList<ObjectKitchen> baseList;
-    private Vector<ObjectKitchen> currentList = new Vector<>();
-    private JTextField text;
-    private JComboListener listener;
+    private final Vector<ObjectKitchen> currentList = new Vector<>();
+    private final JTextField text;
 
     JAutoComboBox() {
         super();
@@ -18,7 +17,7 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
         //setModel(new DefaultComboBoxModel<>(currentList));
         text = (JTextField) this.getEditor().getEditorComponent();
         text.setFocusable(true);
-        listener = new JComboListener(this, currentList);
+        JComboListener listener = new JComboListener(this, currentList);
         text.addKeyListener(listener);
         setList(new ArrayList<>());
     }
@@ -60,7 +59,8 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
 
     public void removeItem(ObjectKitchen o) {
         //System.out.println(baseList.remove(o));
-        //super.removeItem(o);
+        baseList.remove(o);
+        currentList.remove(o);
         //System.out.println(currentList.remove(o));
         setModel(new DefaultComboBoxModel<>(currentList));
         setSelectedIndex(-1);

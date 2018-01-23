@@ -18,7 +18,14 @@ public abstract class ObjectKitchen implements Serializable {
     }
 
     public int compareTo(ObjectKitchen obj) {
-        return name.compareToIgnoreCase(obj.getName());
+        if (this instanceof Ingredient && obj instanceof Ingredient)
+            return ((Ingredient)this).compareTo((Ingredient) obj);
+        else if (this instanceof Recipe && obj instanceof Recipe)
+            return ((Recipe)this).compareTo((Recipe) obj);
+        else if (this instanceof Person && obj instanceof Person)
+            return ((Person)this).compareTo((Person) obj);
+        else
+            return name.compareToIgnoreCase(obj.getName());
     }
 
     public static void addAlphabetically(ArrayList<ObjectKitchen> objectKitchens, ObjectKitchen obj) {

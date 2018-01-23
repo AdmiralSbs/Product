@@ -7,15 +7,13 @@ import java.awt.event.ActionListener;
 
 public class AddPersonPanel extends JPanelKitchen {
 
-    private JTextField nameField;
+    private final JTextField nameField;
 
     public AddPersonPanel() {
         topLabel = new JLabel("Add New Person");
-        JButton[] b = {new JButton("Create Person"), new JButton("Back")};
-        buttons = b;
+        buttons = new JButton[]{new JButton("Create Person"), new JButton("Back")};
         buttons[0].addActionListener(new CreatePerson());
-        int[] l = {-1, 1};
-        locations = l;
+        locations = new int[]{-1, 1};
         //size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();

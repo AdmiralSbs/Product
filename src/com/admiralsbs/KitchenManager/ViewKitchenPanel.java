@@ -10,16 +10,14 @@ import java.util.ArrayList;
 
 public class ViewKitchenPanel extends JPanelKitchen {
 
-    JCheckBox[] checkBoxes = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
-    JListKitchen ingredientsList = new JListKitchen();
-    JLabel status = new JLabel(" ");
+    private final JCheckBox[] checkBoxes = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
+    private final JListKitchen ingredientsList = new JListKitchen();
+    private final JLabel status = new JLabel(" ");
 
     public ViewKitchenPanel() {
         topLabel = new JLabel("View Kitchen");
-        JButton[] b = {new JButton("Back")};
-        buttons = b;
-        int[] l = {0};
-        locations = l;
+        buttons = new JButton[]{new JButton("Back")};
+        locations = new int[]{0};
         buttonSize = new Dimension(150, 50);
         setUp();
 
@@ -129,7 +127,7 @@ public class ViewKitchenPanel extends JPanelKitchen {
     }
 
     private class BoxChanged implements ActionListener {
-        int code;
+        final int code;
 
         public BoxChanged(int i) { code = i; }
 
@@ -145,10 +143,6 @@ public class ViewKitchenPanel extends JPanelKitchen {
     }
 
     private void updateList() {
-        boolean[] checks = new boolean[5];
-        for (int i = 0; i < 5; i++) {
-            checks[i] = checkBoxes[i].isSelected();
-        }
         ArrayList<ObjectKitchen> ings = new ArrayList<>();
         for (ObjectKitchen ok : Main.getKitchen().getIngredients()) {
             Ingredient ing = (Ingredient) ok;

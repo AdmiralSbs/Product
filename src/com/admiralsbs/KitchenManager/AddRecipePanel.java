@@ -6,22 +6,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class AddRecipePanel extends JPanelKitchen {
 
-    private JTextField nameField;
-    private JTextField categoryField;
-    private JCheckBox[] mealSelections = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
-    private String[] meals = {"Breakfast", "Lunch", "Dinner", "Dessert", "Snack"};
-    private JAutoComboBox ingredients, selectedIngredients, people, selectedPeople, parentRecipe;
+    private final JTextField nameField;
+    private final JTextField categoryField;
+    private final JCheckBox[] mealSelections = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
+    static final String[] meals = {"Breakfast", "Lunch", "Dinner", "Dessert", "Snack"};
+    private final JAutoComboBox ingredients;
+    private final JAutoComboBox selectedIngredients;
+    private final JAutoComboBox people;
+    private final JAutoComboBox selectedPeople;
+    private final JAutoComboBox parentRecipe;
 
     public AddRecipePanel() {
         topLabel = new JLabel("Add New Recipe");
-        JButton[] b = {new JButton("Create Recipe"), new JButton("Back"), new JButton("Add Ingredient"),
+        buttons = new JButton[]{new JButton("Create Recipe"), new JButton("Back"), new JButton("Add Ingredient"),
                 new JButton("Remove Ingredient"), new JButton("Add Person"), new JButton("Remove Person")};
-        buttons = b;
         buttons[0].addActionListener(new AddRecipePanel.CreateRecipe());
-        int[] l = {-1, 1, -1, -1, -1, -1};
-        locations = l;
+        locations = new int[]{-1, 1, -1, -1, -1, -1};
         //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();
@@ -179,7 +182,7 @@ public class AddRecipePanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent e) {
             Ingredient ing = (Ingredient) ingredients.getSelectedItem();
-            System.out.println(ing.getCount());
+            //System.out.println(ing.getCount());
             if (ing != null) {
                 ingredients.removeItem(ing);
                 selectedIngredients.addItem(ing);
@@ -202,7 +205,7 @@ public class AddRecipePanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent e) {
             Ingredient ing = (Ingredient) selectedIngredients.getSelectedItem();
-            System.out.println(ing.getCount());
+            //System.out.println(ing.getCount());
             if (ing != null) {
                 selectedIngredients.removeItem(ing);
                 ingredients.addItem(ing);

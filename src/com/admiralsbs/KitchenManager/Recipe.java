@@ -6,10 +6,10 @@ import java.util.ArrayList;
 public class Recipe extends ObjectKitchen implements Serializable {
     private static final long serialVersionUID = -3L;
 
-    protected String category;
-    protected ArrayList<Ingredient> ingredients;
-    protected ArrayList<Person> people;
-    protected boolean[] mealTimes = new boolean[5]; //[Breakfast, Lunch, Dinner, Dessert, Snack]
+    private String category;
+    private final ArrayList<Ingredient> ingredients;
+    private final ArrayList<Person> people;
+    private boolean[] mealTimes = new boolean[5]; //[Breakfast, Lunch, Dinner, Dessert, Snack]
     private Recipe parentRecipe;
 
     public Recipe(String n, String c, ArrayList<Ingredient> ings, ArrayList<Person> peeps, boolean[] mT) {

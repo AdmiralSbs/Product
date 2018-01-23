@@ -8,15 +8,13 @@ import java.util.ArrayList;
 
 public class RemoveRecipePanel extends JPanelKitchen {
 
-    private JAutoComboBox recipeBox;
+    private final JAutoComboBox recipeBox;
 
     public RemoveRecipePanel() {
         topLabel = new JLabel("Remove Recipe");
-        JButton[] b = {new JButton("Remove"), new JButton("Back")};
-        buttons = b;
+        buttons = new JButton[]{new JButton("Remove"), new JButton("Back")};
         buttons[0].addActionListener(new RemoveRecipePanel.RemoveRecipe());
-        int[] l = {-1, 1};
-        locations = l;
+        locations = new int[]{-1, 1};
         //size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();
@@ -46,10 +44,7 @@ public class RemoveRecipePanel extends JPanelKitchen {
     @Override
     public void switchedTo() {
         ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        for (Recipe p : Main.getKitchen().getRecipes()) {
-            peep.add(p);
-            //System.out.println(p.getName());
-        }
+        peep.addAll(Main.getKitchen().getRecipes());
         recipeBox.setList(peep);
 
     }

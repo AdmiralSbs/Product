@@ -2,19 +2,15 @@ package com.admiralsbs.KitchenManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class KitchenEditorPanel extends JPanelKitchen {
 
     public KitchenEditorPanel() {
         topLabel = new JLabel("Kitchen Manager");
-        JButton[] b = {new JButton("Add New Ingredient"), new JButton("Add New Recipe"),
+        buttons = new JButton[]{new JButton("Add New Ingredient"), new JButton("Add New Recipe"),
                 new JButton("Add New Person"), new JButton("Remove Ingredient"),
                 new JButton("Remove Recipe"), new JButton("Remove Person"), new JButton("Back")};
-        buttons = b;
-        int[] l = {7, 8, 9, 10, 11, 12, 0};
-        locations = l;
+        locations = new int[]{7, 8, 9, 10, 11, 12, 0};
         //size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();

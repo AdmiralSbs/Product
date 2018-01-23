@@ -13,7 +13,7 @@ public abstract class JPanelKitchen extends JPanel {
     protected Dimension buttonSize;
 
     protected class BPress implements ActionListener {
-        private int i;
+        private final int i;
 
         protected BPress(int i) {
             this.i = i;

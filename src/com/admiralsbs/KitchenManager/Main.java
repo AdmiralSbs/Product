@@ -10,15 +10,16 @@ import java.util.ArrayList;
 public class Main extends JFrame {
     private static Kitchen kitchen;
     private static JPanel currentPanel;
-    private static JPanelKitchen[] panels = new JPanelKitchen[13];
+    private static final JPanelKitchen[] panels = new JPanelKitchen[13];
     private static Main main;
     static Font TOP_LABEL_FONT;
-    private static boolean DEBUG = false;
+    @SuppressWarnings("FieldCanBeLocal")
+    private static final boolean DEBUG = false;
     private static final int widthBuffer = 50;
     private static final int heightBuffer = 50;
     static final Person NA = new Person("N/A");
 
-    private static final String ACCEPTABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "-_ ";
+    private static final String ACCEPTABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "-_ &";
 
     private Main() {
         //getBuffer();
@@ -51,12 +52,13 @@ public class Main extends JFrame {
         main.addWindowListener(new WindowClose());
         main.pack();
         main.setVisible(true);
-        while (DEBUG) {
+        //noinspection ConstantConditions
+        do {
             try {
                 Thread.sleep(1000);
             } catch (Exception ignored) {
             }
-        }
+        } while (DEBUG);
     }
 
     static void setCurrentPanel(int i) {
@@ -65,14 +67,14 @@ public class Main extends JFrame {
     }
 
     private void sCP(int i) {
-        int xLoc = 0, yLoc = 0;
+        int xLoc, yLoc;
         if (isVisible()) {
             xLoc = getLocationOnScreen().x + (int) getSize().getWidth() / 2;
             yLoc = getLocationOnScreen().y + (int) getSize().getHeight() / 2;
         } else {
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-            xLoc = dim.width/2;
-            yLoc = dim.height/2;
+            xLoc = dim.width / 2;
+            yLoc = dim.height / 2;
         }
         panels[i].switchedTo();
         currentPanel = panels[i];
@@ -80,13 +82,13 @@ public class Main extends JFrame {
 //        setMinimumSize(new Dimension(((JPanelKitchen) getContentPane()).getBaseWidth() + widthBuffer,
 //                ((JPanelKitchen) getContentPane()).getBaseHeight() + heightBuffer));
 //        setSize(getMinimumSize());
-        setMinimumSize(new Dimension(0,0));
+        setMinimumSize(new Dimension(0, 0));
         pack();
         setMinimumSize(new Dimension((int) getSize().getWidth() + widthBuffer,
                 (int) getSize().getHeight() + heightBuffer));
         setSize(getMinimumSize());
         //if (isVisible()) {
-            setLocation(xLoc - (int) getSize().getWidth() / 2, yLoc - (int) getSize().getHeight() / 2);
+        setLocation(xLoc - (int) getSize().getWidth() / 2, yLoc - (int) getSize().getHeight() / 2);
         //}
     }
 
@@ -107,7 +109,7 @@ public class Main extends JFrame {
                     if (name.length() > 8) {
                         if (name.substring(name.length() - 8).equals(".kitchen")) {
                             int index = name.indexOf(File.separator);
-                            name = name.substring(index+1);
+                            name = name.substring(index + 1);
                             listOfFiles.add(name.substring(0, name.length() - 8));
                         }
                     }
@@ -139,7 +141,7 @@ public class Main extends JFrame {
                         null, options, options[0]);
                 choice = txt.getText();
                 //if (choice == null) continue;
-                if (!Main.isNameAcceptable(choice.trim())) {
+                if (!Main.isNameAcceptable(choice.trim()) || choice.trim().equals("Create New Kitchen")) {
                     JOptionPane.showMessageDialog(null,
                             "Please enter an acceptable name",
                             "Invalid",
@@ -147,9 +149,9 @@ public class Main extends JFrame {
                     choice = null;
                 }
             }
-            kitchen = new Kitchen(choice);
+            kitchen = new Kitchen(choice.trim());
         } else {
-            ObjectInputStream reader = null;
+            ObjectInputStream reader;
             try {
                 File file = new File("Kitchens" + File.separator + choice + ".kitchen");
                 FileInputStream r1 = new FileInputStream(file);
@@ -199,14 +201,13 @@ public class Main extends JFrame {
                 writer = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
             } catch (FileNotFoundException e1) {
                 System.err.println("File not found");
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             try {
                 writer.writeObject(kitchen);
                 writer.close();
-            } catch (IOException e1 ) {
+            } catch (IOException e1) {
                 System.err.println("IOException");
             } catch (Exception e2) {
                 System.err.println("OOps");
@@ -217,18 +218,23 @@ public class Main extends JFrame {
         @Override
         public void windowOpened(WindowEvent windowEvent) {
         }
+
         @Override
         public void windowClosed(WindowEvent windowEvent) {
         }
+
         @Override
         public void windowIconified(WindowEvent windowEvent) {
         }
+
         @Override
         public void windowDeiconified(WindowEvent windowEvent) {
         }
+
         @Override
         public void windowActivated(WindowEvent windowEvent) {
         }
+
         @Override
         public void windowDeactivated(WindowEvent windowEvent) {
         }

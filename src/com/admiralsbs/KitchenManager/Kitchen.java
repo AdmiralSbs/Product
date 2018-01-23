@@ -96,6 +96,7 @@ public class Kitchen implements Serializable {
     }
 
     public boolean addIngredient(Ingredient i) {
+        //noinspection SimplifiableIfStatement
         if (!ingredients.contains(i)) {
             return ingredients.add(i); //true
         }
@@ -103,6 +104,7 @@ public class Kitchen implements Serializable {
     }
 
     public boolean addRecipe(Recipe r) {
+        //noinspection SimplifiableIfStatement
         if (!recipes.contains(r)) {
             return recipes.add(r); //true
         }
@@ -110,8 +112,8 @@ public class Kitchen implements Serializable {
     }
 
     public boolean addPerson(Person p) {
+        //noinspection SimplifiableIfStatement
         if (!people.contains(p)) {
-
             return people.add(p); //true
         }
         return false;

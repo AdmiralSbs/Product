@@ -8,19 +8,22 @@ import java.util.ArrayList;
 
 public class EditRecipePanel extends JPanelKitchen{
 
-    private JTextField categoryField;
-    private JCheckBox[] mealSelections = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
-    private String[] meals = {"Breakfast", "Lunch", "Dinner", "Dessert", "Snack"};
-    private JAutoComboBox ingredients, selectedIngredients, people, selectedPeople, parentRecipe, recipes;
+    private final JTextField categoryField;
+    private final JCheckBox[] mealSelections = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
+    private final String[] meals = {"Breakfast", "Lunch", "Dinner", "Dessert", "Snack"};
+    private final JAutoComboBox ingredients;
+    private final JAutoComboBox selectedIngredients;
+    private final JAutoComboBox people;
+    private final JAutoComboBox selectedPeople;
+    private final JAutoComboBox parentRecipe;
+    private final JAutoComboBox recipes;
 
     public EditRecipePanel() {
         topLabel = new JLabel("Edit Recipe");
-        JButton[] b = {new JButton("Update Recipe"), new JButton("Back"), new JButton("Add Ingredient"),
+        buttons = new JButton[]{new JButton("Update Recipe"), new JButton("Back"), new JButton("Add Ingredient"),
                 new JButton("Remove Ingredient"), new JButton("Add Person"), new JButton("Remove Person")};
-        buttons = b;
         buttons[0].addActionListener(new EditRecipePanel.UpdateRecipe());
-        int[] l = {-1, 2, -1, -1, -1, -1};
-        locations = l;
+        locations = new int[]{-1, 2, -1, -1, -1, -1};
         buttonSize = new Dimension(150, 50);
         setUp();
 
@@ -157,7 +160,7 @@ public class EditRecipePanel extends JPanelKitchen{
         selectedIngredients.setList(new ArrayList<>());
         selectedPeople.setList(new ArrayList<>());
 
-        ArrayList<ObjectKitchen> recs = new ArrayList<>(), recs2 = new ArrayList<>();;
+        ArrayList<ObjectKitchen> recs = new ArrayList<>(), recs2 = new ArrayList<>();
         recs.addAll(Main.getKitchen().getRecipes());
         recipes.setList(recs);
 

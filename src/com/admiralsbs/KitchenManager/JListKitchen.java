@@ -1,13 +1,12 @@
 package com.admiralsbs.KitchenManager;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import java.util.ArrayList;
 
 public class JListKitchen extends JList<ObjectKitchen> {
 
     private ArrayList<ObjectKitchen> baseList;
-    private DefaultListModel<ObjectKitchen> defaultListModel = new DefaultListModel<>();
+    private final DefaultListModel<ObjectKitchen> defaultListModel = new DefaultListModel<>();
 
     JListKitchen() {
         super();

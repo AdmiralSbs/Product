@@ -8,18 +8,18 @@ import java.util.ArrayList;
 
 public class UpdateIngredientPanel extends JPanelKitchen {
 
-    private JAutoComboBox nameComboBox;
-    private JTextField unitField, countField;
-    private JCheckBox hasCount, isAvailable;
-    private JComboBox<Priority> priorityJComboBox;
+    private final JAutoComboBox nameComboBox;
+    private final JTextField unitField;
+    private final JTextField countField;
+    private final JCheckBox hasCount;
+    private final JCheckBox isAvailable;
+    private final JComboBox<Priority> priorityJComboBox;
 
     public UpdateIngredientPanel() {
         topLabel = new JLabel("Update Ingredient");
-        JButton[] b = {new JButton("Update Ingredient"), new JButton("Back")};
-        buttons = b;
+        buttons = new JButton[]{new JButton("Update Ingredient"), new JButton("Back")};
         buttons[0].addActionListener(new UpdateIngredientPanel.UpdateIngredient());
-        int[] l = {-1, 2};
-        locations = l;
+        locations = new int[]{-1, 2};
         //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();

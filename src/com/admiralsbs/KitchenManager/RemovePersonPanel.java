@@ -5,19 +5,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class RemovePersonPanel extends JPanelKitchen {
 
-    private JAutoComboBox peopleBox;
+    private final JAutoComboBox peopleBox;
 
     public RemovePersonPanel() {
         topLabel = new JLabel("Remove Person");
-        JButton[] b = {new JButton("Remove"), new JButton("Back")};
-        buttons = b;
+        buttons = new JButton[]{new JButton("Remove"), new JButton("Back")};
         buttons[0].addActionListener(new RemovePersonPanel.RemovePerson());
-        int[] l = {-1, 1};
-        locations = l;
+        locations = new int[]{-1, 1};
         //size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();
@@ -47,10 +44,7 @@ public class RemovePersonPanel extends JPanelKitchen {
     @Override
     public void switchedTo() {
         ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        for (Person p : Main.getKitchen().getPeople()) {
-            peep.add(p);
-            //System.out.println(p.getName());
-        }
+        peep.addAll(Main.getKitchen().getPeople());
         peopleBox.setList(peep);
     }
 

@@ -6,18 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AddIngredientPanel extends JPanelKitchen {
-    private JTextField nameField;
-    private JTextField unitField;
-    private JCheckBox hasCount;
-    private JComboBox<Priority> priorityJComboBox;
+    private final JTextField nameField;
+    private final JTextField unitField;
+    private final JCheckBox hasCount;
+    private final JComboBox<Priority> priorityJComboBox;
 
     public AddIngredientPanel() {
         topLabel = new JLabel("Add New Ingredient");
-        JButton[] b = {new JButton("Create Ingredient"), new JButton("Back")};
-        buttons = b;
+        buttons = new JButton[]{new JButton("Create Ingredient"), new JButton("Back")};
         buttons[0].addActionListener(new CreateIngredient());
-        int[] l = {-1, 1};
-        locations = l;
+        locations = new int[]{-1, 1};
         //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();

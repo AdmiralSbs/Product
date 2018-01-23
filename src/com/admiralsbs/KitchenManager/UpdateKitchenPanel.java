@@ -7,10 +7,8 @@ public class UpdateKitchenPanel extends JPanelKitchen {
 
     public UpdateKitchenPanel() {
         topLabel = new JLabel("Update Kitchen");
-        JButton[] b = {new JButton("Update Ingredient"), new JButton("Edit Recipe"), new JButton("Back")};
-        buttons = b;
-        int[] l = {5, 6, 0};
-        locations = l;
+        buttons = new JButton[]{new JButton("Update Ingredient"), new JButton("Edit Recipe"), new JButton("Back")};
+        locations = new int[]{5, 6, 0};
 //        size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();

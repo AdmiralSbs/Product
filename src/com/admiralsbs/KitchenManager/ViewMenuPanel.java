@@ -8,20 +8,18 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.*;
-import java.util.List;
 
 public class ViewMenuPanel extends JPanelKitchen {
 
-    private JAutoComboBox people, selectedPeople;
-    private JCheckBox[] timeCheckBoxes = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
+    private final JAutoComboBox people;
+    private final JAutoComboBox selectedPeople;
+    private final JCheckBox[] timeCheckBoxes = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
 
 
     public ViewMenuPanel() {
         topLabel = new JLabel("View Menu");
-        JButton[] b = {new JButton("Create Menu"), new JButton("Back"), new JButton("Add Person"), new JButton("Remove Person")};
-        buttons = b;
-        int[] l = {-1, 0, -1, -1};
-        locations = l;
+        buttons = new JButton[]{new JButton("Create Menu"), new JButton("Back"), new JButton("Add Person"), new JButton("Remove Person")};
+        locations = new int[]{-1, 0, -1, -1};
         buttonSize = new Dimension(150, 50);
         setUp();
 
@@ -35,12 +33,7 @@ public class ViewMenuPanel extends JPanelKitchen {
 
         buttons[2].addActionListener(new AddPerson());
         buttons[3].addActionListener(new RemovePerson());
-        buttons[0].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createMenu();
-            }
-        });
+        buttons[0].addActionListener(e -> createMenu());
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -103,11 +96,10 @@ public class ViewMenuPanel extends JPanelKitchen {
     @Override
     public void switchedTo() {
         ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        for (Person p : Main.getKitchen().getPeople()) {
-            peep.add(p);
-        }
+        peep.addAll(Main.getKitchen().getPeople());
         people.setList(peep);
         selectedPeople.setList(new ArrayList<>());
+        System.out.println("Switched to menu");
     }
 
     private class AddPerson implements ActionListener {
@@ -233,7 +225,7 @@ public class ViewMenuPanel extends JPanelKitchen {
 
     private void createFile(String html) {
         File file = new File("Menu.html");
-        BufferedWriter writer = null;
+        BufferedWriter writer;
         try {
             file.createNewFile();
             writer = new BufferedWriter(new FileWriter(file));
@@ -251,7 +243,7 @@ public class ViewMenuPanel extends JPanelKitchen {
         if (cssFile.exists()) return;
         try {
             cssFile.createNewFile();
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
         String cssText = "@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');\n" +
                 "@import url('https://fonts.googleapis.com/css?family=Merriweather:400,700');\n" +
                 "body {\n" +
