@@ -1,10 +1,8 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class JAutoComboBox extends JComboBox<ObjectKitchen> {
+class JAutoComboBox extends JComboBox<ObjectKitchen> {
 
     private ArrayList<ObjectKitchen> baseList;
     private final Vector<ObjectKitchen> currentList = new Vector<>();
@@ -61,7 +59,5 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
     public ArrayList<ObjectKitchen> getBaseList() {
         return baseList;
     }
-
-    public Vector<ObjectKitchen> getCurrentList() { return currentList; }
 
 }

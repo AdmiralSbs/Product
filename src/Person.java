@@ -1,5 +1,3 @@
-package com.admiralsbs.KitchenManager;
-
 import java.io.Serializable;
 
 public class Person extends ObjectKitchen implements Serializable {

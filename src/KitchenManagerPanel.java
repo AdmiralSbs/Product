@@ -1,5 +1,3 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.awt.*;
 

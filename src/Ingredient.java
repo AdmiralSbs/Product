@@ -1,5 +1,3 @@
-package com.admiralsbs.KitchenManager;
-
 import java.io.Serializable;
 
 public class Ingredient extends ObjectKitchen implements Serializable {
@@ -44,12 +42,6 @@ public class Ingredient extends ObjectKitchen implements Serializable {
 
     public void setCount(int i) {
         count = i;
-    }
-
-    public void changeCount(int i) {
-        if (count == -1 || count == -2)
-            return;
-        count += i;
     }
 
     public int compareTo(Ingredient i) {

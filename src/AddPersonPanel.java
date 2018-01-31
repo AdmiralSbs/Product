@@ -1,11 +1,9 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddPersonPanel extends JPanelKitchen {
+class AddPersonPanel extends JPanelKitchen {
 
     private final JTextField nameField;
 
@@ -53,8 +51,7 @@ public class AddPersonPanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             String test = nameField.getText().trim();
-            if (test.length() == 0)
-                return;
+            if (test.length() == 0); //return
             else if (!Main.isNameAcceptable(test))
                 failed("Name can only have basic characters");
             else if (Main.getKitchen().getPerson(test) == null) {

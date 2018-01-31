@@ -1,16 +1,14 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 
-public class JComboListener extends KeyAdapter {
+class JComboListener extends KeyAdapter {
 
     private final JAutoComboBox comboBox;
     private final Vector<ObjectKitchen> items;
 
-    public JComboListener(JAutoComboBox jacb, Vector v) {
+    public JComboListener(JAutoComboBox jacb, Vector<ObjectKitchen> v) {
         super();
         comboBox = jacb;
         items = v;
@@ -31,7 +29,7 @@ public class JComboListener extends KeyAdapter {
     }
 
     private Vector<ObjectKitchen> getFilteredList(String text) {
-        Vector<ObjectKitchen> v = new Vector();
+        Vector<ObjectKitchen> v = new Vector<>();
         for (ObjectKitchen o : items) {
             if (o.getName().toLowerCase().startsWith(text.toLowerCase())) {
                 v.add(o);

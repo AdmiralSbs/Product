@@ -1,5 +1,3 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -172,8 +170,7 @@ public class UpdateIngredientPanel extends JPanelKitchen {
                     return;
                 }
             }
-            if (ing == null || (c && unit.length() == 0))
-                return; //Stop because they haven't finished
+            if (ing == null || (c && unit.length() == 0)); //Stop because they haven't finished
             else if ((c && !Main.isNameAcceptable(unit))) {
                 failed("Unit can only have basic characters");
             } else if (c && count < 0) {

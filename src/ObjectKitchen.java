@@ -1,15 +1,13 @@
-package com.admiralsbs.KitchenManager;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public abstract class ObjectKitchen implements Serializable {
+abstract class ObjectKitchen implements Serializable {
     private static final long serialVersionUID = -2L;
 
     protected final String name;
 
-    public ObjectKitchen(String n) {
+    protected ObjectKitchen(String n) {
         name = n;
     }
 
@@ -17,7 +15,7 @@ public abstract class ObjectKitchen implements Serializable {
         return name;
     }
 
-    public int compareTo(ObjectKitchen obj) {
+    private int compareTo(ObjectKitchen obj) {
         if (this instanceof Ingredient && obj instanceof Ingredient)
             return ((Ingredient)this).compareTo((Ingredient) obj);
         else if (this instanceof Recipe && obj instanceof Recipe)

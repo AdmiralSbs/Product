@@ -1,9 +1,7 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class JListKitchen extends JList<ObjectKitchen> {
+class JListKitchen extends JList<ObjectKitchen> {
 
     private ArrayList<ObjectKitchen> baseList;
     private final DefaultListModel<ObjectKitchen> defaultListModel = new DefaultListModel<>();

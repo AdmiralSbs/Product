@@ -1,9 +1,7 @@
-package com.admiralsbs.KitchenManager;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Kitchen implements Serializable {
+class Kitchen implements Serializable {
     private static final long serialVersionUID = -1L;
 
     private final String owner;

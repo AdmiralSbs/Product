@@ -1,13 +1,12 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Main extends JFrame {
+class Main extends JFrame {
     private static Kitchen kitchen;
     private static JPanel currentPanel;
     private static final JPanelKitchen[] panels = new JPanelKitchen[13];
@@ -71,6 +70,17 @@ public class Main extends JFrame {
             xLoc = dim.width / 2;
             yLoc = dim.height / 2;
         }
+
+        ArrayList<ObjectKitchen> ok = new ArrayList<>();
+        ok.addAll(kitchen.getIngredients());
+        ObjectKitchen.sort(ok);
+        ok.clear();
+        ok.addAll(kitchen.getRecipes());
+        ObjectKitchen.sort(ok);
+        ok.clear();
+        ok.addAll(kitchen.getPeople());
+        ObjectKitchen.sort(ok);
+
         panels[i].switchedTo();
         currentPanel = panels[i];
         setContentPane(currentPanel);
@@ -121,7 +131,7 @@ public class Main extends JFrame {
             panel.add(txt);
             choice = null;
             while (choice == null) {
-                int i = JOptionPane.showOptionDialog(null, panel,
+                JOptionPane.showOptionDialog(null, panel,
                         "Create New Kitchen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, options, options[0]);
                 choice = txt.getText();
@@ -140,7 +150,7 @@ public class Main extends JFrame {
                 File file = new File("Kitchens" + File.separator + choice + ".kitchen");
                 FileInputStream r1 = new FileInputStream(file);
                 BufferedInputStream r2 = new BufferedInputStream(r1);
-                reader = new ObjectInputStream(r1);
+                reader = new ObjectInputStream(r2);
                 kitchen = (Kitchen) reader.readObject();
             } catch (Exception e) {
                 System.err.println("Issue reading file");
@@ -150,6 +160,7 @@ public class Main extends JFrame {
         }
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     static boolean isNameAcceptable(String name) {
         name = name.trim();
         if (name.length() == 0)

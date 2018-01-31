@@ -1,20 +1,18 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public abstract class JPanelKitchen extends JPanel {
-    protected JLabel topLabel;
-    protected JButton[] buttons;
-    protected int[] locations;
-    protected Dimension buttonSize;
+abstract class JPanelKitchen extends JPanel {
+    JLabel topLabel;
+    JButton[] buttons;
+    int[] locations;
+    Dimension buttonSize;
 
-    protected class BPress implements ActionListener {
+    class BPress implements ActionListener {
         private final int i;
 
-        protected BPress(int i) {
+        BPress(int i) {
             this.i = i;
         }
 
@@ -24,7 +22,7 @@ public abstract class JPanelKitchen extends JPanel {
         }
     }
 
-    protected void setUp() {
+    void setUp() {
         topLabel.setFont(Main.TOP_LABEL_FONT);
         for (int i = 0; i < buttons.length; i++) {
             if (locations[i] >= 0)

@@ -1,5 +1,3 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -51,8 +49,7 @@ public class RemovePersonPanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             ObjectKitchen selected = (ObjectKitchen) peopleBox.getSelectedItem();
-            if (selected == null)
-                return;
+            if (selected == null); //return
             else {
                 String test = (selected).getName();
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + test + "?", "Confirmation", JOptionPane.YES_NO_OPTION);

@@ -1,5 +1,3 @@
-package com.admiralsbs.KitchenManager;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -10,6 +8,7 @@ public class Recipe extends ObjectKitchen implements Serializable {
     private final ArrayList<Ingredient> ingredients;
     private final ArrayList<Person> people;
     private boolean[] mealTimes = new boolean[5]; //[Breakfast, Lunch, Dinner, Dessert, Snack]
+    public static final String[] MEALS = {"Breakfast", "Lunch", "Dinner", "Dessert", "Snack"};
     private Recipe parentRecipe;
 
     public Recipe(String n, String c, ArrayList<Ingredient> ings, ArrayList<Person> peeps, boolean[] mT) {
@@ -44,10 +43,6 @@ public class Recipe extends ObjectKitchen implements Serializable {
 
     public ArrayList<Person> getPeople() {
         return people;
-    }
-
-    public boolean[] getMealTimes() {
-        return mealTimes;
     }
 
     public boolean getMealTime(int i) {

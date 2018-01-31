@@ -1,24 +1,22 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class RemoveRecipePanel extends JPanelKitchen {
+public class RemoveIngredientPanel extends JPanelKitchen {
 
-    private final JAutoComboBox recipeBox;
+    private final JAutoComboBox ingredientBox;
 
-    public RemoveRecipePanel() {
-        topLabel = new JLabel("Remove Recipe");
+    public RemoveIngredientPanel() {
+        topLabel = new JLabel("Remove Ingredient");
         buttons = new JButton[]{new JButton("Remove"), new JButton("Back")};
-        buttons[0].addActionListener(new RemoveRecipePanel.RemoveRecipe());
+        buttons[0].addActionListener(new RemoveIngredientPanel.RemoveIngredient());
         locations = new int[]{-1, 1};
         buttonSize = new Dimension(150, 50);
         setUp();
 
-        recipeBox = new JAutoComboBox();
+        ingredientBox = new JAutoComboBox();
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -31,7 +29,7 @@ public class RemoveRecipePanel extends JPanelKitchen {
 
         c.gridwidth = 1;
         c.gridy = 1;
-        add(recipeBox, c);
+        add(ingredientBox, c);
 
         c.gridx = 1;
         add(buttons[0], c);
@@ -43,24 +41,23 @@ public class RemoveRecipePanel extends JPanelKitchen {
     @Override
     public void switchedTo() {
         ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        peep.addAll(Main.getKitchen().getRecipes());
-        recipeBox.setList(peep);
+        peep.addAll(Main.getKitchen().getIngredients());
+        ingredientBox.setList(peep);
 
     }
 
-    private class RemoveRecipe implements ActionListener {
+    private class RemoveIngredient implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            ObjectKitchen selected = (ObjectKitchen) recipeBox.getSelectedItem();
-            if (selected == null)
-                return;
+            ObjectKitchen selected = (ObjectKitchen) ingredientBox.getSelectedItem();
+            if (selected == null); //return
             else {
                 String test = (selected).getName();
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + test + "?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
-                    if (Main.getKitchen().removeRecipe((Recipe) selected)) {
+                    if (Main.getKitchen().removeIngredient((Ingredient) selected)) {
                         JOptionPane.showMessageDialog(null, "Removed " + test);
-                        recipeBox.removeItem(selected);
+                        ingredientBox.removeItem(selected);
                     }
                     else
                         System.out.println("Failed to remove " + test);
@@ -68,4 +65,5 @@ public class RemoveRecipePanel extends JPanelKitchen {
             }
         }
     }
+    
 }

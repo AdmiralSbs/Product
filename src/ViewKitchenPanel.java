@@ -1,5 +1,3 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -129,7 +127,7 @@ public class ViewKitchenPanel extends JPanelKitchen {
     private class BoxChanged implements ActionListener {
         final int code;
 
-        public BoxChanged(int i) { code = i; }
+        BoxChanged(int i) { code = i; }
 
         @Override
         public void actionPerformed(ActionEvent e) {

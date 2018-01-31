@@ -1,11 +1,9 @@
-package com.admiralsbs.KitchenManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddIngredientPanel extends JPanelKitchen {
+class AddIngredientPanel extends JPanelKitchen {
     private final JTextField nameField;
     private final JTextField unitField;
     private final JCheckBox hasCount;
@@ -102,8 +100,7 @@ public class AddIngredientPanel extends JPanelKitchen {
             String name = nameField.getText().trim();
             String unit = unitField.getText().trim();
             boolean count = hasCount.isSelected();
-            if (name.length() == 0 || (count && unit.length() == 0))
-                return; //Stop because they haven't finished
+            if (name.length() == 0 || (count && unit.length() == 0)); //Stop because they haven't finished
             else if (!Main.isNameAcceptable(name))
                 failed("Name can only have basic characters");
             else if ((count && !Main.isNameAcceptable(unit))) {
