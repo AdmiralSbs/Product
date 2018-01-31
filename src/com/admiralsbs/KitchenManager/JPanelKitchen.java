@@ -9,7 +9,6 @@ public abstract class JPanelKitchen extends JPanel {
     protected JLabel topLabel;
     protected JButton[] buttons;
     protected int[] locations;
-//    protected Dimension size;
     protected Dimension buttonSize;
 
     protected class BPress implements ActionListener {
@@ -32,21 +31,8 @@ public abstract class JPanelKitchen extends JPanel {
                 buttons[i].addActionListener(new BPress(locations[i]));
             buttons[i].setPreferredSize(buttonSize);
         }
-//        setSize(size);
     }
 
     public void switchedTo() { }
-
-//    public Dimension getBaseSize() {
-//        return size;
-//    }
-//
-//    public int getBaseWidth() {
-//        return (int) size.getWidth();
-//    }
-//
-//    public int getBaseHeight() {
-//        return (int) size.getHeight();
-//    }
 
 }

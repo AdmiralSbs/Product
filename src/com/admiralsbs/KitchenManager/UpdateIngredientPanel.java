@@ -20,7 +20,6 @@ public class UpdateIngredientPanel extends JPanelKitchen {
         buttons = new JButton[]{new JButton("Update Ingredient"), new JButton("Back")};
         buttons[0].addActionListener(new UpdateIngredientPanel.UpdateIngredient());
         locations = new int[]{-1, 2};
-        //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();
 

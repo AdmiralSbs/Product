@@ -22,7 +22,6 @@ public class Main extends JFrame {
     private static final String ACCEPTABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "-_ &";
 
     private Main() {
-        //getBuffer();
         JLabel j = new JLabel();
         j.setFont(new Font(j.getFont().getName(), Font.BOLD, 36));
         TOP_LABEL_FONT = j.getFont();
@@ -44,10 +43,7 @@ public class Main extends JFrame {
 
     public static void main(String[] args) {
         findFile();
-        //JAutoComboBox.ONE_ITEM_LIST.add(new Person("!@#"));
-
         main = new Main();
-        //main.setLocation(100, 100);
         main.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         main.addWindowListener(new WindowClose());
         main.pack();
@@ -63,7 +59,6 @@ public class Main extends JFrame {
 
     static void setCurrentPanel(int i) {
         main.sCP(i);
-        //Other static stuff
     }
 
     private void sCP(int i) {
@@ -79,24 +74,14 @@ public class Main extends JFrame {
         panels[i].switchedTo();
         currentPanel = panels[i];
         setContentPane(currentPanel);
-//        setMinimumSize(new Dimension(((JPanelKitchen) getContentPane()).getBaseWidth() + widthBuffer,
-//                ((JPanelKitchen) getContentPane()).getBaseHeight() + heightBuffer));
-//        setSize(getMinimumSize());
         setMinimumSize(new Dimension(0, 0));
         pack();
         setMinimumSize(new Dimension((int) getSize().getWidth() + widthBuffer,
                 (int) getSize().getHeight() + heightBuffer));
         setSize(getMinimumSize());
-        //if (isVisible()) {
         setLocation(xLoc - (int) getSize().getWidth() / 2, yLoc - (int) getSize().getHeight() / 2);
-        //}
     }
 
-//    private void getBuffer() {
-//        pack();
-//        widthBuffer = getWidth() - getContentPane().getWidth();
-//        heightBuffer = getHeight() - getContentPane().getHeight();
-//    }
 
     private static void findFile() {
         new File("Kitchens").mkdir();
@@ -140,7 +125,6 @@ public class Main extends JFrame {
                         "Create New Kitchen", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, options, options[0]);
                 choice = txt.getText();
-                //if (choice == null) continue;
                 if (!Main.isNameAcceptable(choice.trim()) || choice.trim().equals("Create New Kitchen")) {
                     JOptionPane.showMessageDialog(null,
                             "Please enter an acceptable name",
@@ -164,13 +148,7 @@ public class Main extends JFrame {
                 System.exit(1);
             }
         }
-        //sendKitchenInformation();
     }
-
-//    private static void sendKitchenInformation() {
-//
-//    }
-
 
     static boolean isNameAcceptable(String name) {
         name = name.trim();

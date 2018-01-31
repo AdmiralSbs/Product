@@ -11,7 +11,6 @@ public class KitchenEditorPanel extends JPanelKitchen {
                 new JButton("Add New Person"), new JButton("Remove Ingredient"),
                 new JButton("Remove Recipe"), new JButton("Remove Person"), new JButton("Back")};
         locations = new int[]{7, 8, 9, 10, 11, 12, 0};
-        //size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();
 

@@ -16,7 +16,6 @@ public class AddIngredientPanel extends JPanelKitchen {
         buttons = new JButton[]{new JButton("Create Ingredient"), new JButton("Back")};
         buttons[0].addActionListener(new CreateIngredient());
         locations = new int[]{-1, 1};
-        //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();
 

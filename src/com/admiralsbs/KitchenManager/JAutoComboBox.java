@@ -6,7 +6,6 @@ import java.util.Vector;
 
 public class JAutoComboBox extends JComboBox<ObjectKitchen> {
 
-    //static final ArrayList<ObjectKitchen> ONE_ITEM_LIST = new ArrayList<>();
     private ArrayList<ObjectKitchen> baseList;
     private final Vector<ObjectKitchen> currentList = new Vector<>();
     private final JTextField text;
@@ -14,7 +13,6 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
     JAutoComboBox() {
         super();
         setRenderer(new JListCellRenderer());
-        //setModel(new DefaultComboBoxModel<>(currentList));
         text = (JTextField) this.getEditor().getEditorComponent();
         text.setFocusable(true);
         JComboListener listener = new JComboListener(this, currentList);
@@ -22,18 +20,9 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
         setList(new ArrayList<>());
     }
 
-//    JAutoComboBox(ArrayList<ObjectKitchen> l) {
-//        super();
-//        setRenderer(new JListCellRenderer());
-//        //setModel(new DefaultComboBoxModel<>(currentList));
-//        text = (JTextField) this.getEditor().getEditorComponent();
-//        text.setFocusable(true);
-//
-//        setList(l);
-//    }
+
 
     void setList(ArrayList<ObjectKitchen> l) {
-        //setModel(new DefaultComboBoxModel<>(currentList));
         currentList.removeAllElements();
         baseList = l;
         currentList.addAll(baseList);
@@ -49,7 +38,6 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
     }
 
     private void setItemsToList() {
-        //removeAllItems();
         currentList.removeAllElements();
         currentList.addAll(baseList);
         setModel(new DefaultComboBoxModel<>(currentList));
@@ -58,19 +46,15 @@ public class JAutoComboBox extends JComboBox<ObjectKitchen> {
     }
 
     public void removeItem(ObjectKitchen o) {
-        //System.out.println(baseList.remove(o));
         baseList.remove(o);
         currentList.remove(o);
-        //System.out.println(currentList.remove(o));
         setModel(new DefaultComboBoxModel<>(currentList));
         setSelectedIndex(-1);
         text.setText("");
     }
 
     public void addItem(ObjectKitchen o) {
-        //Add alphabetically
         ObjectKitchen.addAlphabetically(baseList, o);
-        //Replace ^ with correct stuff
         setItemsToList();
     }
 

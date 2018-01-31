@@ -25,7 +25,6 @@ public class AddRecipePanel extends JPanelKitchen {
                 new JButton("Remove Ingredient"), new JButton("Add Person"), new JButton("Remove Person")};
         buttons[0].addActionListener(new AddRecipePanel.CreateRecipe());
         locations = new int[]{-1, 1, -1, -1, -1, -1};
-        //size = new Dimension(500, 500);
         buttonSize = new Dimension(150, 50);
         setUp();
 
@@ -33,10 +32,8 @@ public class AddRecipePanel extends JPanelKitchen {
         JLabel categoryLabel = new JLabel("Category: ");
         JLabel parentLabel = new JLabel("Parent Recipe");
         nameField = new JTextField();
-        //nameField.setColumns(50);
         nameField.setPreferredSize(new Dimension(200, 20));
         categoryField = new JTextField();
-        //categoryField.setColumns(50);
         categoryField.setPreferredSize(new Dimension(200, 20));
 
         ingredients = new JAutoComboBox();
@@ -53,7 +50,7 @@ public class AddRecipePanel extends JPanelKitchen {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.gridwidth = 4; //Change this if necessary
+        c.gridwidth = 4;
         c.insets = new Insets(10, 10, 10, 10);
         c.gridx = 0;
         c.gridy = 0;
@@ -144,13 +141,6 @@ public class AddRecipePanel extends JPanelKitchen {
         add(buttons[5], c);
     }
 
-//    private class SwapCheckBox implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent actionEvent) {
-//            unitField.setEnabled(hasCount.isSelected());
-//        }
-//    }
-
     @Override
     public void switchedTo() {
         ArrayList<ObjectKitchen> ings = new ArrayList<>();
@@ -175,14 +165,12 @@ public class AddRecipePanel extends JPanelKitchen {
         parentRecipe.addItem(na);
         parentRecipe.setSelectedItem(na);
 
-        //System.out.println("Switched to happened");
     }
 
     private class AddIngredient implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Ingredient ing = (Ingredient) ingredients.getSelectedItem();
-            //System.out.println(ing.getCount());
             if (ing != null) {
                 ingredients.removeItem(ing);
                 selectedIngredients.addItem(ing);
@@ -205,7 +193,6 @@ public class AddRecipePanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent e) {
             Ingredient ing = (Ingredient) selectedIngredients.getSelectedItem();
-            //System.out.println(ing.getCount());
             if (ing != null) {
                 selectedIngredients.removeItem(ing);
                 ingredients.addItem(ing);

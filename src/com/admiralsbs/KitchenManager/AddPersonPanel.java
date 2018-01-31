@@ -14,17 +14,12 @@ public class AddPersonPanel extends JPanelKitchen {
         buttons = new JButton[]{new JButton("Create Person"), new JButton("Back")};
         buttons[0].addActionListener(new CreatePerson());
         locations = new int[]{-1, 1};
-        //size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();
 
-
-        //JPanel namePanel = new JPanel();
-        //namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
         JLabel nameLabel = new JLabel("Name: ");
         nameField = new JTextField();
         nameField.setPreferredSize(new Dimension(200, 20));
-        //nameField.setSize(new Dimension(100,20));
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -57,7 +52,6 @@ public class AddPersonPanel extends JPanelKitchen {
     private class CreatePerson implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            //System.out.println("Did");
             String test = nameField.getText().trim();
             if (test.length() == 0)
                 return;

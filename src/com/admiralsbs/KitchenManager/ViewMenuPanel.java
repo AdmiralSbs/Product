@@ -89,7 +89,6 @@ public class ViewMenuPanel extends JPanelKitchen {
 
         c.gridx = 0;
         c.gridy = 7;
-        //System.out.println("X: " + c.gridx + ", Y: " + c.gridy);
         add(buttons[0]);
     }
 
@@ -140,7 +139,6 @@ public class ViewMenuPanel extends JPanelKitchen {
         if (!b) return;
 
         ArrayList<Recipe> recipes = new ArrayList<>();
-        //System.out.println(ints.toString());
 
         AllRecipes:
         for (Recipe r : Main.getKitchen().getRecipes()) {
@@ -162,11 +160,8 @@ public class ViewMenuPanel extends JPanelKitchen {
             }
             if (tests[0] && tests[1])
                 recipes.add(r);
-            //else
-                //System.out.println(r.getName() + ", " + Arrays.toString(tests));
         }
 
-        //System.out.println(recipes.size());
         StringBuilder html = new StringBuilder();
         final String nL = "\n";
         html.append("<html>").append(nL).append("<head>").append(nL).append("<title>Menu</title>").append(nL);
@@ -190,7 +185,6 @@ public class ViewMenuPanel extends JPanelKitchen {
             for (Recipe r : recipes)
                 if (r.getMealTime(i))
                     recs.add(r);
-            //System.out.println(recs.size());
             html.append("<h2>").append(timesStrings[i]).append("</h2>");
             HashSet<String> cats = new HashSet<>();
             for (Recipe r : recs) {
@@ -199,8 +193,6 @@ public class ViewMenuPanel extends JPanelKitchen {
 
             ArrayList<String> categories = new ArrayList<>();
             categories.addAll(cats);
-            //System.out.println(categories.size());
-            //System.out.println(categories.get(0));
             ArrayList<Recipe>[] subGroups = new ArrayList[categories.size()];
             for (int j = 0; j < subGroups.length; j++) {
                 subGroups[j] = new ArrayList<>();

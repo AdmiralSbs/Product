@@ -15,7 +15,6 @@ public class RemoveIngredientPanel extends JPanelKitchen {
         buttons = new JButton[]{new JButton("Remove"), new JButton("Back")};
         buttons[0].addActionListener(new RemoveIngredientPanel.RemoveIngredient());
         locations = new int[]{-1, 1};
-        //size = new Dimension(350, 390);
         buttonSize = new Dimension(150, 50);
         setUp();
 
@@ -52,13 +51,11 @@ public class RemoveIngredientPanel extends JPanelKitchen {
     private class RemoveIngredient implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            //System.out.println("Did");
             ObjectKitchen selected = (ObjectKitchen) ingredientBox.getSelectedItem();
             if (selected == null)
                 return;
             else {
                 String test = (selected).getName();
-                //System.out.println(test);
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + test + "?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     if (Main.getKitchen().removeIngredient((Ingredient) selected)) {
