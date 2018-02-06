@@ -108,7 +108,7 @@ class AddIngredientPanel extends JPanelKitchen {
             } else if (Main.getKitchen().getIngredient(name) == null) {
                 String u = (count) ? unit : "";
                 Main.getKitchen().addIngredient(new Ingredient(name, 0, u, (Priority) priorityJComboBox.getSelectedItem()));
-
+                succeeded(name);
             } else
                 failed("Ingredient already exists");
 

@@ -187,6 +187,7 @@ class Main extends JFrame {
                 e.printStackTrace();
             }
             try {
+                assert writer != null;
                 writer.writeObject(kitchen);
                 writer.close();
             } catch (IOException e1) {

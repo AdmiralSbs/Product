@@ -21,8 +21,8 @@ class JListKitchen extends JList<ObjectKitchen> {
         setSelectedIndex(-1);
     }
 
-    public ArrayList<ObjectKitchen> getBaseList() {
+    /*public ArrayList<ObjectKitchen> getBaseList() {
         return baseList;
-    }
+    }*/
 
 }

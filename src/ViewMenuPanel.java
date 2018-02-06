@@ -168,16 +168,17 @@ public class ViewMenuPanel extends JPanelKitchen {
         html.append("<html>").append(nL).append("<head>").append(nL).append("<title>Menu</title>").append(nL);
         html.append("<link rel=\"stylesheet\" href=\"style.css\">").append(nL);
         html.append("</head>").append(nL).append("<body>").append(nL);
-        final String[] timesStrings = {"Breakfast", "Lunch", "Dinner", "Dessert", "Snack"};
-        String title = "";
+
+        StringBuilder title = new StringBuilder();
         for (Integer i : ints) {
-            title += timesStrings[i] + "/";
+            title.append(Recipe.MEALS[i]).append("/");
         }
-        title = title.substring(0,title.length() - 1) + " for ";
+        title.setLength(title.length()-1);
+        title.append(" for ");
         for (ObjectKitchen ok : selectedPeople.getBaseList()) {
-            title += ok.getName() + "/";
+            title.append(ok.getName()).append("/");
         }
-        title = title.substring(0,title.length() - 1);
+        title.setLength(title.length()-1);
         html.append("<h1>").append(title).append("</h1>");
 
         for (Integer i : ints) {
@@ -186,7 +187,7 @@ public class ViewMenuPanel extends JPanelKitchen {
             for (Recipe r : recipes)
                 if (r.getMealTime(i))
                     recs.add(r);
-            html.append("<h2>").append(timesStrings[i]).append("</h2>");
+            html.append("<h2>").append(Recipe.MEALS[i]).append("</h2>");
             HashSet<String> cats = new HashSet<>();
             for (Recipe r : recs) {
                 cats.add(r.getCategory().toLowerCase());
@@ -194,6 +195,7 @@ public class ViewMenuPanel extends JPanelKitchen {
 
             ArrayList<String> categories = new ArrayList<>();
             categories.addAll(cats);
+            @SuppressWarnings("unchecked")
             ArrayList<Recipe>[] subGroups = new ArrayList[categories.size()];
             for (int j = 0; j < subGroups.length; j++) {
                 subGroups[j] = new ArrayList<>();
