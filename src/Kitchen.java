@@ -20,16 +20,16 @@ class Kitchen implements Serializable {
         return owner;
     }
 
-    public ArrayList<Ingredient> getIngredients() {
-        return ingredients;
+    public ArrayList<ObjectKitchen> getIngredients() {
+        return ObjectKitchen.convertToObjectKitchen(ingredients);
     }
 
-    public ArrayList<Recipe> getRecipes() {
-        return recipes;
+    public ArrayList<ObjectKitchen> getRecipes() {
+        return ObjectKitchen.convertToObjectKitchen(recipes);
     }
 
-    public ArrayList<Person> getPeople() {
-        return people;
+    public ArrayList<ObjectKitchen> getPeople() {
+        return ObjectKitchen.convertToObjectKitchen(people);
     }
 
     public Ingredient getIngredient(String s) {
@@ -93,28 +93,24 @@ class Kitchen implements Serializable {
         return false;
     }
 
-    public boolean addIngredient(Ingredient i) {
-        //noinspection SimplifiableIfStatement
+    public void addIngredient(Ingredient i) {
         if (!ingredients.contains(i)) {
-            return ingredients.add(i); //true
+            ObjectKitchen.addAlphabetically(ObjectKitchen.convertToObjectKitchen(ingredients), i);
         }
-        return false;
+
     }
 
-    public boolean addRecipe(Recipe r) {
-        //noinspection SimplifiableIfStatement
+    public void addRecipe(Recipe r) {
         if (!recipes.contains(r)) {
-            return recipes.add(r); //true
+            ObjectKitchen.addAlphabetically(ObjectKitchen.convertToObjectKitchen(recipes), r);
         }
-        return false;
+
     }
 
-    public boolean addPerson(Person p) {
-        //noinspection SimplifiableIfStatement
+    public void addPerson(Person p) {
         if (!people.contains(p)) {
-            return people.add(p); //true
+            ObjectKitchen.addAlphabetically(ObjectKitchen.convertToObjectKitchen(people), p);
         }
-        return false;
     }
 
 }

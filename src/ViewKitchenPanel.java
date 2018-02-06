@@ -117,9 +117,7 @@ public class ViewKitchenPanel extends JPanelKitchen {
 
     @Override
     public void switchedTo() {
-        ArrayList<ObjectKitchen> ings = new ArrayList<>();
-        ings.addAll(Main.getKitchen().getIngredients());
-        ingredientsList.setList(ings);
+        ingredientsList.setList(Main.getKitchen().getIngredients());
         for (JCheckBox jCheckBox : checkBoxes)
             jCheckBox.setSelected(true);
     }

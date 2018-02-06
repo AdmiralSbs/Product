@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class UpdateIngredientPanel extends JPanelKitchen {
 
@@ -118,9 +117,7 @@ public class UpdateIngredientPanel extends JPanelKitchen {
 
     @Override
     public void switchedTo() {
-        ArrayList<ObjectKitchen> ings = new ArrayList<>();
-        ings.addAll(Main.getKitchen().getIngredients());
-        nameComboBox.setList(ings);
+        nameComboBox.setList(Main.getKitchen().getIngredients());
         nameComboBox.addActionListener(new RecipeSelected());
     }
 

@@ -50,6 +50,12 @@ abstract class ObjectKitchen implements Serializable {
         }
     }
 
+    public static ArrayList<ObjectKitchen> convertToObjectKitchen(ArrayList<? extends ObjectKitchen> oKs) {
+        ArrayList<ObjectKitchen> newList = new ArrayList<>();
+        newList.addAll(oKs);
+        return newList;
+    }
+
     @Override
     public String toString() {
         return getName();

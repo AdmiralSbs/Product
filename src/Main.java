@@ -4,7 +4,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 class Main extends JFrame {
     private static Kitchen kitchen;
@@ -71,15 +70,9 @@ class Main extends JFrame {
             yLoc = dim.height / 2;
         }
 
-        ArrayList<ObjectKitchen> ok = new ArrayList<>();
-        ok.addAll(kitchen.getIngredients());
-        ObjectKitchen.sort(ok);
-        ok.clear();
-        ok.addAll(kitchen.getRecipes());
-        ObjectKitchen.sort(ok);
-        ok.clear();
-        ok.addAll(kitchen.getPeople());
-        ObjectKitchen.sort(ok);
+        ObjectKitchen.sort(kitchen.getIngredients());
+        ObjectKitchen.sort(kitchen.getRecipes());
+        ObjectKitchen.sort(kitchen.getPeople());
 
         panels[i].switchedTo();
         currentPanel = panels[i];
@@ -194,6 +187,7 @@ class Main extends JFrame {
                 e.printStackTrace();
             }
             try {
+                assert writer != null;
                 writer.writeObject(kitchen);
                 writer.close();
             } catch (IOException e1) {

@@ -141,24 +141,18 @@ public class AddRecipePanel extends JPanelKitchen {
 
     @Override
     public void switchedTo() {
-        ArrayList<ObjectKitchen> ings = new ArrayList<>();
-        ings.addAll(Main.getKitchen().getIngredients());
-        ingredients.setList(ings);
-
-        ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        peep.addAll(Main.getKitchen().getPeople());
-        people.setList(peep);
+        ingredients.setList(Main.getKitchen().getIngredients());
+        people.setList(Main.getKitchen().getPeople());
 
         selectedIngredients.setList(new ArrayList<>());
         selectedPeople.setList(new ArrayList<>());
 
-        ArrayList<ObjectKitchen> recs = new ArrayList<>();
-        recs.addAll(Main.getKitchen().getRecipes());
-        for (ObjectKitchen r : recs) {
-            if (((Recipe) r).isSubRecipe())
-                recs.remove(r);
+        ArrayList<ObjectKitchen> recs2 = new ArrayList<>();
+        for (ObjectKitchen r : Main.getKitchen().getRecipes()) {
+            if (!((Recipe) r).isSubRecipe())
+                recs2.add(r);
         }
-        parentRecipe.setList(recs);
+        parentRecipe.setList(recs2);
         Person na = new Person("N/A");
         parentRecipe.addItem(na);
         parentRecipe.setSelectedItem(na);
@@ -236,10 +230,8 @@ public class AddRecipePanel extends JPanelKitchen {
                     ings.add((Ingredient) ok);
                 for (ObjectKitchen ok : selectedPeople.getBaseList())
                     peeps.add((Person) ok);
-                if (Main.getKitchen().addRecipe(new Recipe(test, cat, ings, peeps, mls, parRec)))
-                    succeeded(test);
-                else
-                    failed("Unknown error");
+                Main.getKitchen().addRecipe(new Recipe(test, cat, ings, peeps, mls, parRec));
+                succeeded(test);
             } else
                 failed("Recipe already exists");
 

@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class RemoveIngredientPanel extends JPanelKitchen {
 
@@ -40,10 +39,7 @@ public class RemoveIngredientPanel extends JPanelKitchen {
 
     @Override
     public void switchedTo() {
-        ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        peep.addAll(Main.getKitchen().getIngredients());
-        ingredientBox.setList(peep);
-
+        ingredientBox.setList(Main.getKitchen().getIngredients());
     }
 
     private class RemoveIngredient implements ActionListener {
