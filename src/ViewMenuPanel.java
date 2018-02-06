@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Vector;
 
 public class ViewMenuPanel extends JPanelKitchen {
 
@@ -136,10 +138,11 @@ public class ViewMenuPanel extends JPanelKitchen {
         }
         if (!b) return;
 
-        ArrayList<Recipe> recipes = new ArrayList<>();
+        ArrayList<Recipe> recipes = new ArrayList<>(), allRecipes = new ArrayList<>();
+        for (ObjectKitchen ok : Main.getKitchen().getRecipes()) allRecipes.add((Recipe) ok);
 
         AllRecipes:
-        for (Recipe r : Main.getKitchen().getRecipes()) {
+        for (Recipe r : allRecipes) {
             boolean[] tests = {false, false};
             for (Integer i : ints) {
                 if (r.getMealTime(i)) {

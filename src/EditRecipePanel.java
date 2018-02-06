@@ -139,22 +139,16 @@ public class EditRecipePanel extends JPanelKitchen {
 
     @Override
     public void switchedTo() {
-        ArrayList<ObjectKitchen> ings = new ArrayList<>();
-        ings.addAll(Main.getKitchen().getIngredients());
-        ingredients.setList(ings);
-
-        ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        peep.addAll(Main.getKitchen().getPeople());
-        people.setList(peep);
+        ingredients.setList(Main.getKitchen().getIngredients());
+        people.setList(Main.getKitchen().getPeople());
 
         selectedIngredients.setList(new ArrayList<>());
         selectedPeople.setList(new ArrayList<>());
 
-        ArrayList<ObjectKitchen> recs = new ArrayList<>(), recs2 = new ArrayList<>();
-        recs.addAll(Main.getKitchen().getRecipes());
-        recipes.setList(recs);
+        ArrayList<ObjectKitchen> recs2 = new ArrayList<>();
+        recipes.setList(Main.getKitchen().getRecipes());
 
-        for (ObjectKitchen r : recs) {
+        for (ObjectKitchen r : Main.getKitchen().getRecipes()) {
             if (!((Recipe) r).isSubRecipe())
                 recs2.add(r);
         }

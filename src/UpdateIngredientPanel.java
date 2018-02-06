@@ -118,9 +118,7 @@ public class UpdateIngredientPanel extends JPanelKitchen {
 
     @Override
     public void switchedTo() {
-        ArrayList<ObjectKitchen> ings = new ArrayList<>();
-        ings.addAll(Main.getKitchen().getIngredients());
-        nameComboBox.setList(ings);
+        nameComboBox.setList(Main.getKitchen().getIngredients());
         nameComboBox.addActionListener(new RecipeSelected());
     }
 

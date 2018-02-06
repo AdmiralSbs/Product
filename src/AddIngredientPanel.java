@@ -107,10 +107,8 @@ class AddIngredientPanel extends JPanelKitchen {
                 failed("Unit can only have basic characters");
             } else if (Main.getKitchen().getIngredient(name) == null) {
                 String u = (count) ? unit : "";
-                if (Main.getKitchen().addIngredient(new Ingredient(name, 0, u, (Priority) priorityJComboBox.getSelectedItem())))
-                    succeeded(name);
-                else
-                    failed("Unknown error");
+                Main.getKitchen().addIngredient(new Ingredient(name, 0, u, (Priority) priorityJComboBox.getSelectedItem()));
+
             } else
                 failed("Ingredient already exists");
 

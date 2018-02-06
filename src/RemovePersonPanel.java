@@ -40,9 +40,7 @@ public class RemovePersonPanel extends JPanelKitchen {
 
     @Override
     public void switchedTo() {
-        ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        peep.addAll(Main.getKitchen().getPeople());
-        peopleBox.setList(peep);
+        peopleBox.setList(Main.getKitchen().getPeople());
     }
 
     private class RemovePerson implements ActionListener {

@@ -15,7 +15,7 @@ abstract class ObjectKitchen implements Serializable {
         return name;
     }
 
-    private int compareTo(ObjectKitchen obj) {
+    public int compareTo(ObjectKitchen obj) {
         if (this instanceof Ingredient && obj instanceof Ingredient)
             return ((Ingredient)this).compareTo((Ingredient) obj);
         else if (this instanceof Recipe && obj instanceof Recipe)
@@ -48,6 +48,12 @@ abstract class ObjectKitchen implements Serializable {
             if (!swapped)
                 break;
         }
+    }
+
+    public static ArrayList<ObjectKitchen> convertToObjectKitchen(ArrayList<? extends ObjectKitchen> oKs) {
+        ArrayList<ObjectKitchen> newList = new ArrayList<>();
+        newList.addAll(oKs);
+        return newList;
     }
 
     @Override

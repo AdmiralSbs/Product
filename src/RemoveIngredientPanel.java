@@ -40,10 +40,7 @@ public class RemoveIngredientPanel extends JPanelKitchen {
 
     @Override
     public void switchedTo() {
-        ArrayList<ObjectKitchen> peep = new ArrayList<>();
-        peep.addAll(Main.getKitchen().getIngredients());
-        ingredientBox.setList(peep);
-
+        ingredientBox.setList(Main.getKitchen().getIngredients());
     }
 
     private class RemoveIngredient implements ActionListener {
