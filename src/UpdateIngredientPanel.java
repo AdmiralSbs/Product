@@ -173,10 +173,10 @@ public class UpdateIngredientPanel extends JPanelKitchen {
                 } else if (c && count < 0) {
                     failed("Count must be at least 0");
                 } else {
-                    if (c) ing.setCount(count);
-                    else ing.setCount((a) ? -1 : -2);
                     String u = (c) ? unit : "";
                     ing.setUnit(u);
+                    if (c) ing.setCount(count);
+                    else ing.setCount((a) ? -1 : -2);
                     ing.setPriority((Priority) priorityJComboBox.getSelectedItem());
                     succeeded(ing.getName());
                 }

@@ -14,7 +14,6 @@ public class ViewMenuPanel extends JPanelKitchen {
     private final JAutoComboBox selectedPeople;
     private final JCheckBox[] timeCheckBoxes = {new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox(), new JCheckBox()};
 
-
     public ViewMenuPanel() {
         topLabel = new JLabel("View Menu");
         buttons = new JButton[]{new JButton("Create Menu"), new JButton("Back"), new JButton("Add Person"), new JButton("Remove Person")};
