@@ -40,10 +40,34 @@ public class AddRecipePanel extends JPanelKitchen {
         selectedPeople = new JAutoComboBox();
         parentRecipe = new JAutoComboBox();
 
-        buttons[2].addActionListener(new AddIngredient());
-        buttons[3].addActionListener(new RemoveIngredient());
-        buttons[4].addActionListener(new AddPerson());
-        buttons[5].addActionListener(new RemovePerson());
+        buttons[2].addActionListener((ActionEvent e) -> {
+            Ingredient ing = (Ingredient) ingredients.getSelectedItem();
+            if (ing != null) {
+                ingredients.removeItem(ing);
+                selectedIngredients.addItem(ing);
+            }
+        });
+        buttons[3].addActionListener((e) -> {
+            Ingredient ing = (Ingredient) selectedIngredients.getSelectedItem();
+            if (ing != null) {
+                selectedIngredients.removeItem(ing);
+                ingredients.addItem(ing);
+            }
+        });
+        buttons[4].addActionListener((e) -> {
+            Person peep = (Person) people.getSelectedItem();
+            if (peep != null) {
+                people.removeItem(peep);
+                selectedPeople.addItem(peep);
+            }
+        });
+        buttons[5].addActionListener((e) -> {
+            Person peep = (Person) selectedPeople.getSelectedItem();
+            if (peep != null) {
+                selectedPeople.removeItem(peep);
+                people.addItem(peep);
+            }
+        });
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -153,54 +177,9 @@ public class AddRecipePanel extends JPanelKitchen {
                 recs2.add(r);
         }
         parentRecipe.setList(recs2);
-        Person na = new Person("N/A");
-        parentRecipe.addItem(na);
-        parentRecipe.setSelectedItem(na);
+        parentRecipe.addItem(Main.NA);
+        parentRecipe.setSelectedItem(Main.NA);
 
-    }
-
-    private class AddIngredient implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Ingredient ing = (Ingredient) ingredients.getSelectedItem();
-            if (ing != null) {
-                ingredients.removeItem(ing);
-                selectedIngredients.addItem(ing);
-            }
-        }
-    }
-
-    private class AddPerson implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Person peep = (Person) people.getSelectedItem();
-            if (peep != null) {
-                people.removeItem(peep);
-                selectedPeople.addItem(peep);
-            }
-        }
-    }
-
-    private class RemoveIngredient implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Ingredient ing = (Ingredient) selectedIngredients.getSelectedItem();
-            if (ing != null) {
-                selectedIngredients.removeItem(ing);
-                ingredients.addItem(ing);
-            }
-        }
-    }
-
-    private class RemovePerson implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Person peep = (Person) selectedPeople.getSelectedItem();
-            if (peep != null) {
-                selectedPeople.removeItem(peep);
-                people.addItem(peep);
-            }
-        }
     }
 
     private class CreateRecipe implements ActionListener {
@@ -212,28 +191,29 @@ public class AddRecipePanel extends JPanelKitchen {
             for (int i = 0; i < 5; i++)
                 mls[i] = mealSelections[i].isSelected();
             Recipe parRec = (parentRecipe.getSelectedItem() instanceof Person) ? null : (Recipe) parentRecipe.getSelectedItem();
-            if (test.length() == 0 || cat.length() == 0); //return
-            else if (!(mls[0] || mls[1] || mls[2] || mls[3] || mls[4]))
-                failed("Select a time");
-            else if (!Main.isNameAcceptable(test))
-                failed("Name can only have basic characters");
-            else if (!Main.isNameAcceptable(cat))
-                failed("Category can only have basic characters");
-            else if (selectedIngredients.getBaseList().size() == 0)
-                failed("Recipe requires at least one ingredient");
-            else if (selectedPeople.getBaseList().size() == 0)
-                failed("Recipe requires at least one person");
-            else if (Main.getKitchen().getRecipe(test) == null) {
-                ArrayList<Ingredient> ings = new ArrayList<>();
-                ArrayList<Person> peeps = new ArrayList<>();
-                for (ObjectKitchen ok : selectedIngredients.getBaseList())
-                    ings.add((Ingredient) ok);
-                for (ObjectKitchen ok : selectedPeople.getBaseList())
-                    peeps.add((Person) ok);
-                Main.getKitchen().addRecipe(new Recipe(test, cat, ings, peeps, mls, parRec));
-                succeeded(test);
-            } else
-                failed("Recipe already exists");
+            if (test.length() > 0 && cat.length() > 0) { //Require a name and category to continue
+                if (!(mls[0] || mls[1] || mls[2] || mls[3] || mls[4]))
+                    failed("Select a time");
+                else if (!Main.isNameAcceptable(test))
+                    failed("Name can only have basic characters");
+                else if (!Main.isNameAcceptable(cat))
+                    failed("Category can only have basic characters");
+                else if (selectedIngredients.getBaseList().size() == 0)
+                    failed("Recipe requires at least one ingredient");
+                else if (selectedPeople.getBaseList().size() == 0)
+                    failed("Recipe requires at least one person");
+                else if (Main.getKitchen().getRecipe(test) == null) {
+                    ArrayList<Ingredient> ings = new ArrayList<>();
+                    ArrayList<Person> peeps = new ArrayList<>();
+                    for (ObjectKitchen ok : selectedIngredients.getBaseList())
+                        ings.add((Ingredient) ok);
+                    for (ObjectKitchen ok : selectedPeople.getBaseList())
+                        peeps.add((Person) ok);
+                    Main.getKitchen().addRecipe(new Recipe(test, cat, ings, peeps, mls, parRec));
+                    succeeded(test);
+                } else
+                    failed("Recipe already exists");
+            }
 
         }
 

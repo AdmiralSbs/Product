@@ -10,7 +10,7 @@ Remove ___ - Removes the object from the system COMPLETELY
 Update Ingredient - Change the unit (if there is one), count (if there is one), availability (if there is no unit), priority
 Edit Recipe - Change the values (looks like Add Recipe)
 View Kitchen - See all the ingredients based off the parameters of Priority and Availability
-View Menu - Choose the people and times, and your brower will display a menu with all available recipes
+View Menu - Choose the people and times, and your browser will display a menu with all available recipes
 
 Notes on Objects -
 All names are final

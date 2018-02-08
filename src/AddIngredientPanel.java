@@ -27,7 +27,7 @@ class AddIngredientPanel extends JPanelKitchen {
         unitField.setPreferredSize(new Dimension(200, 20));
         hasCount = new JCheckBox();
         hasCount.setSelected(true);
-        hasCount.addActionListener(new SwapCheckBox());
+        hasCount.addActionListener((e) -> unitField.setEnabled(hasCount.isSelected()));
 
         Priority[] pris = {Priority.LOW, Priority.MEDIUM, Priority.HIGH};
         priorityJComboBox = new JComboBox<>(pris);
@@ -87,30 +87,25 @@ class AddIngredientPanel extends JPanelKitchen {
         add(buttons[1], c);
     }
 
-    private class SwapCheckBox implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            unitField.setEnabled(hasCount.isSelected());
-        }
-    }
-
     private class CreateIngredient implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             String name = nameField.getText().trim();
             String unit = unitField.getText().trim();
             boolean count = hasCount.isSelected();
-            if (name.length() == 0 || (count && unit.length() == 0)); //Stop because they haven't finished
-            else if (!Main.isNameAcceptable(name))
-                failed("Name can only have basic characters");
-            else if ((count && !Main.isNameAcceptable(unit))) {
-                failed("Unit can only have basic characters");
-            } else if (Main.getKitchen().getIngredient(name) == null) {
-                String u = (count) ? unit : "";
-                Main.getKitchen().addIngredient(new Ingredient(name, 0, u, (Priority) priorityJComboBox.getSelectedItem()));
-                succeeded(name);
-            } else
-                failed("Ingredient already exists");
+            if (name.length() > 0 && (!count || unit.length() > 0)) { //Do nothing if missing name or unit
+                if (!Main.isNameAcceptable(name))
+                    failed("Name can only have basic characters");
+                else if ((count && !Main.isNameAcceptable(unit))) {
+                    failed("Unit can only have basic characters");
+                } else if (Main.getKitchen().getIngredient(name) == null) {
+                    String u = (count) ? unit : "";
+                    Main.getKitchen().addIngredient(new Ingredient(name, 0, u, (Priority) priorityJComboBox.getSelectedItem()));
+                    succeeded(name);
+                } else
+                    failed("Ingredient already exists");
+            }
+
 
         }
 

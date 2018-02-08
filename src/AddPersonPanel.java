@@ -51,16 +51,16 @@ class AddPersonPanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             String test = nameField.getText().trim();
-            if (test.length() == 0); //return
-            else if (!Main.isNameAcceptable(test))
-                failed("Name can only have basic characters");
-            else if (Main.getKitchen().getPerson(test) == null) {
-                if (Main.getKitchen().addPerson(new Person(test)))
+            if (test.length() > 0) {
+                if (!Main.isNameAcceptable(test))
+                    failed("Name can only have basic characters");
+                else if (Main.getKitchen().getPerson(test) == null) {
+                    Main.getKitchen().addPerson(new Person(test));
                     succeeded(test);
-                else
-                    failed("Unknown error");
-            } else
-                failed("Person already exists");
+                } else
+                    failed("Person already exists");
+            }
+
 
         }
 

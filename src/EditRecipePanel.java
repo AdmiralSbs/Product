@@ -38,10 +38,34 @@ public class EditRecipePanel extends JPanelKitchen {
         selectedPeople = new JAutoComboBox();
         parentRecipe = new JAutoComboBox();
 
-        buttons[2].addActionListener(new EditRecipePanel.AddIngredient());
-        buttons[3].addActionListener(new EditRecipePanel.RemoveIngredient());
-        buttons[4].addActionListener(new EditRecipePanel.AddPerson());
-        buttons[5].addActionListener(new EditRecipePanel.RemovePerson());
+        buttons[2].addActionListener((ActionEvent e) -> {
+            Ingredient ing = (Ingredient) ingredients.getSelectedItem();
+            if (ing != null) {
+                ingredients.removeItem(ing);
+                selectedIngredients.addItem(ing);
+            }
+        });
+        buttons[3].addActionListener((e) -> {
+            Ingredient ing = (Ingredient) selectedIngredients.getSelectedItem();
+            if (ing != null) {
+                selectedIngredients.removeItem(ing);
+                ingredients.addItem(ing);
+            }
+        });
+        buttons[4].addActionListener((e) -> {
+            Person peep = (Person) people.getSelectedItem();
+            if (peep != null) {
+                people.removeItem(peep);
+                selectedPeople.addItem(peep);
+            }
+        });
+        buttons[5].addActionListener((e) -> {
+            Person peep = (Person) selectedPeople.getSelectedItem();
+            if (peep != null) {
+                selectedPeople.removeItem(peep);
+                people.addItem(peep);
+            }
+        });
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -160,7 +184,7 @@ public class EditRecipePanel extends JPanelKitchen {
 
     private class RecipeSelected implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {
+        public void actionPerformed(ActionEvent actionEvent) { //Update all fields to match recipe
             Recipe rec = (Recipe) recipes.getSelectedItem();
             if (rec == null) return;
             categoryField.setText(rec.getCategory());
@@ -174,10 +198,10 @@ public class EditRecipePanel extends JPanelKitchen {
             selectedPeople.setList(peeps);
 
             ingsAll.addAll(Main.getKitchen().getIngredients());
-            ingsAll.removeAll(ings);
+            ingsAll.removeAll(ings); //Remove already selected ingredients
 
             peepsAll.addAll(Main.getKitchen().getPeople());
-            peepsAll.removeAll(peeps);
+            peepsAll.removeAll(peeps); //Remove already selected people
 
             ingredients.setList(ingsAll);
             people.setList(peepsAll);
@@ -186,50 +210,6 @@ public class EditRecipePanel extends JPanelKitchen {
                 parentRecipe.setSelectedItem(rec.getParentRecipe());
             } else {
                 parentRecipe.setSelectedItem(Main.NA);
-            }
-        }
-    }
-
-    private class AddIngredient implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Ingredient ing = (Ingredient) ingredients.getSelectedItem();
-            if (ing != null) {
-                ingredients.removeItem(ing);
-                selectedIngredients.addItem(ing);
-            }
-        }
-    }
-
-    private class AddPerson implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Person peep = (Person) people.getSelectedItem();
-            if (peep != null) {
-                people.removeItem(peep);
-                selectedPeople.addItem(peep);
-            }
-        }
-    }
-
-    private class RemoveIngredient implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Ingredient ing = (Ingredient) selectedIngredients.getSelectedItem();
-            if (ing != null) {
-                selectedIngredients.removeItem(ing);
-                ingredients.addItem(ing);
-            }
-        }
-    }
-
-    private class RemovePerson implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Person peep = (Person) selectedPeople.getSelectedItem();
-            if (peep != null) {
-                selectedPeople.removeItem(peep);
-                people.addItem(peep);
             }
         }
     }
@@ -244,35 +224,36 @@ public class EditRecipePanel extends JPanelKitchen {
             for (int i = 0; i < 5; i++)
                 mls[i] = mealSelections[i].isSelected();
             Recipe parRec = (parentRecipe.getSelectedItem() instanceof Person) ? null : (Recipe) parentRecipe.getSelectedItem();
-            if (cat.length() == 0); //return
-            else if (!(mls[0] || mls[1] || mls[2] || mls[3] || mls[4]))
-                failed("Select a time");
-            else if (!Main.isNameAcceptable(cat))
-                failed("Category can only have basic characters");
-            else if (selectedIngredients.getBaseList().size() == 0)
-                failed("Recipe requires at least one ingredient");
-            else if (selectedPeople.getBaseList().size() == 0)
-                failed("Recipe requires at least one person");
-            else if (parRec == rec) {
-                failed("Recipe cannot be its own parent recipe");
+            if (cat.length() != 0) { // Require a category to continue
+                if (!(mls[0] || mls[1] || mls[2] || mls[3] || mls[4]))
+                    failed("Select a time");
+                else if (!Main.isNameAcceptable(cat))
+                    failed("Category can only have basic characters");
+                else if (selectedIngredients.getBaseList().size() == 0)
+                    failed("Recipe requires at least one ingredient");
+                else if (selectedPeople.getBaseList().size() == 0)
+                    failed("Recipe requires at least one person");
+                else if (parRec == rec) {
+                    failed("Recipe cannot be its own parent recipe");
+                } else {
+                    ArrayList<Ingredient> ings = new ArrayList<>();
+                    ArrayList<Person> peeps = new ArrayList<>();
+                    for (ObjectKitchen ok : selectedIngredients.getBaseList())
+                        ings.add((Ingredient) ok);
+                    for (ObjectKitchen ok : selectedPeople.getBaseList())
+                        peeps.add((Person) ok);
+                    for (int i = 0; i < 5; i++)
+                        rec.setMealTime(mls[i], i);
+                    rec.setCategory(cat);
+                    rec.setParentRecipe(parRec);
+                    rec.getIngredients().clear();
+                    rec.getIngredients().addAll(ings);
+                    rec.getPeople().clear();
+                    rec.getPeople().addAll(peeps);
+                    succeeded(rec.getName());
+                }
             }
-            else {
-                ArrayList<Ingredient> ings = new ArrayList<>();
-                ArrayList<Person> peeps = new ArrayList<>();
-                for (ObjectKitchen ok : selectedIngredients.getBaseList())
-                    ings.add((Ingredient) ok);
-                for (ObjectKitchen ok : selectedPeople.getBaseList())
-                    peeps.add((Person) ok);
-                for (int i = 0; i < 5; i++)
-                    rec.setMealTime(mls[i], i);
-                rec.setCategory(cat);
-                rec.setParentRecipe(parRec);
-                rec.getIngredients().clear();
-                rec.getIngredients().addAll(ings);
-                rec.getPeople().clear();
-                rec.getPeople().addAll(peeps);
-                succeeded(rec.getName());
-            }
+
         }
 
         private void failed(String errorMessage) {

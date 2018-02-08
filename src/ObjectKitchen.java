@@ -15,13 +15,13 @@ abstract class ObjectKitchen implements Serializable {
         return name;
     }
 
-    private int compareTo(ObjectKitchen obj) {
+    private int compareTo(ObjectKitchen obj) { //Calls the correct version of compareTo
         if (this instanceof Ingredient && obj instanceof Ingredient)
-            return ((Ingredient)this).compareTo((Ingredient) obj);
+            return ((Ingredient) this).compareTo((Ingredient) obj);
         else if (this instanceof Recipe && obj instanceof Recipe)
-            return ((Recipe)this).compareTo((Recipe) obj);
+            return ((Recipe) this).compareTo((Recipe) obj);
         else if (this instanceof Person && obj instanceof Person)
-            return ((Person)this).compareTo((Person) obj);
+            return ((Person) this).compareTo((Person) obj);
         else
             return name.compareToIgnoreCase(obj.getName());
     }
@@ -54,11 +54,11 @@ abstract class ObjectKitchen implements Serializable {
         ArrayList<ObjectKitchen> newList = new ArrayList<>();
         newList.addAll(oKs);
         return newList;
-    }
+    } //Converts an ArrayList<? extends ObjectKitchen> into an ArrayList<ObjectKitchen>
 
     @Override
     public String toString() {
         return getName();
-    }
+    } //For compatibility purposes
 
 }

@@ -46,16 +46,14 @@ public class RemoveRecipePanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             ObjectKitchen selected = (ObjectKitchen) recipeBox.getSelectedItem();
-            if (selected == null); //return
-            else {
+            if (selected != null) { //Require a selected recipe
                 String test = (selected).getName();
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + test + "?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     if (Main.getKitchen().removeRecipe((Recipe) selected)) {
                         JOptionPane.showMessageDialog(null, "Removed " + test);
                         recipeBox.removeItem(selected);
-                    }
-                    else
+                    } else
                         System.out.println("Failed to remove " + test);
                 }
             }

@@ -46,21 +46,18 @@ public class RemovePersonPanel extends JPanelKitchen {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             ObjectKitchen selected = (ObjectKitchen) peopleBox.getSelectedItem();
-            if (selected == null); //return
-            else {
+            if (selected != null) { //Require a selected person
                 String test = (selected).getName();
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove " + test + "?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     if (Main.getKitchen().removePerson((Person) selected)) {
                         JOptionPane.showMessageDialog(null, "Removed " + test);
                         peopleBox.removeItem(selected);
-                    }
-                    else
+                    } else
                         System.out.println("Failed to remove " + test);
                 }
             }
         }
-
     }
 
 }

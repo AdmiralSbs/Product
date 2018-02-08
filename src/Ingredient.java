@@ -5,6 +5,8 @@ public class Ingredient extends ObjectKitchen implements Serializable {
     private String unit;
     private int count;
     private Priority priority;
+    //When unit is "", count of -1 represents available, and -2 unavailable
+    //Otherwise, count > 0 is available, and 0 unavailable
 
     public Ingredient(String n, int c, String u, Priority p) {
         super(n);

@@ -6,16 +6,14 @@ import java.io.*;
 import java.util.ArrayList;
 
 class Main extends JFrame {
-    private static Kitchen kitchen;
-    private static JPanel currentPanel;
-    private static final JPanelKitchen[] panels = new JPanelKitchen[13];
-    private static Main main;
+    private static Kitchen kitchen; //Kitchen object for the entire program
+    private static final JPanelKitchen[] panels = new JPanelKitchen[13]; //Contains reference to each panel
+    private static Main main; //"Main object" to circumvent various issues
     static Font TOP_LABEL_FONT;
-    @SuppressWarnings("FieldCanBeLocal")
-    private static final boolean DEBUG = false;
+    //private static final boolean DEBUG = false;
     private static final int widthBuffer = 50;
     private static final int heightBuffer = 50;
-    static final Person NA = new Person("N/A");
+    public static final Person NA = new Person("N/A"); //Used in the program as a N/A choice
 
     private static final String ACCEPTABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "1234567890" + "-_ &";
 
@@ -46,13 +44,16 @@ class Main extends JFrame {
         main.addWindowListener(new WindowClose());
         main.pack();
         main.setVisible(true);
-        //noinspection ConstantConditions
-        do {
+
+
+        /*do {
             try {
                 Thread.sleep(1000);
             } catch (Exception ignored) {
             }
-        } while (DEBUG);
+        } while (DEBUG);*/
+
+
     }
 
     static void setCurrentPanel(int i) {
@@ -61,10 +62,10 @@ class Main extends JFrame {
 
     private void sCP(int i) {
         int xLoc, yLoc;
-        if (isVisible()) {
+        if (isVisible()) { //Get current location (middle)
             xLoc = getLocationOnScreen().x + (int) getSize().getWidth() / 2;
             yLoc = getLocationOnScreen().y + (int) getSize().getHeight() / 2;
-        } else {
+        } else { //Set location to middle of screen
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
             xLoc = dim.width / 2;
             yLoc = dim.height / 2;
@@ -74,24 +75,25 @@ class Main extends JFrame {
         ObjectKitchen.sort(kitchen.getRecipes());
         ObjectKitchen.sort(kitchen.getPeople());
 
-        panels[i].switchedTo();
-        currentPanel = panels[i];
-        setContentPane(currentPanel);
-        setMinimumSize(new Dimension(0, 0));
+        panels[i].switchedTo(); //Prepare panel to be shown
+        setContentPane(panels[i]);
+
+        setMinimumSize(new Dimension(0, 0)); //Don't restrict pack method
         pack();
         setMinimumSize(new Dimension((int) getSize().getWidth() + widthBuffer,
-                (int) getSize().getHeight() + heightBuffer));
+                (int) getSize().getHeight() + heightBuffer)); //Increase size by buffer
         setSize(getMinimumSize());
         setLocation(xLoc - (int) getSize().getWidth() / 2, yLoc - (int) getSize().getHeight() / 2);
     }
 
 
     private static void findFile() {
-        new File("Kitchens").mkdir();
+        new File("Kitchens").mkdir(); //Create Kitchens folder if not previously existent
+
         File[] arrayOfFiles = (new File("Kitchens")).listFiles();
         ArrayList<String> listOfFiles = new ArrayList<>();
         if (arrayOfFiles != null) {
-            for (File f : arrayOfFiles) {
+            for (File f : arrayOfFiles) { //Find correctly named kitchen files and add their names to listOfFiles
                 if (f.isFile()) {
                     String name = f.toString();
                     if (name.length() > 8) {
@@ -105,17 +107,17 @@ class Main extends JFrame {
             }
         }
         listOfFiles.add("Create New Kitchen");
+
         Object startValue = listOfFiles.get(0);
         String choice = null;
-        while (choice == null) {
+        while (choice == null) { //Select kitchen file
             choice = (String) JOptionPane.showInputDialog(main,
-                    "Kitchen to open:\n"
-                            + "",
+                    "Kitchen to open:\n",
                     "Customized Dialog",
                     JOptionPane.PLAIN_MESSAGE, null, listOfFiles.toArray(new Object[]{}),
                     startValue);
         }
-        if (choice.equals("Create New Kitchen")) {
+        if (choice.equals("Create New Kitchen")) { //Have user input name of new kitchen
             String[] options = {"OK"};
             JPanel panel = new JPanel();
             JLabel lbl = new JLabel("Name of Kitchen Owner: ");
@@ -137,13 +139,11 @@ class Main extends JFrame {
                 }
             }
             kitchen = new Kitchen(choice.trim());
-        } else {
+        } else { //Read selected kitchen file
             ObjectInputStream reader;
             try {
                 File file = new File("Kitchens" + File.separator + choice + ".kitchen");
-                FileInputStream r1 = new FileInputStream(file);
-                BufferedInputStream r2 = new BufferedInputStream(r1);
-                reader = new ObjectInputStream(r2);
+                reader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
                 kitchen = (Kitchen) reader.readObject();
             } catch (Exception e) {
                 System.err.println("Issue reading file");
@@ -154,7 +154,7 @@ class Main extends JFrame {
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    static boolean isNameAcceptable(String name) {
+    static boolean isNameAcceptable(String name) { //Check if a string contains only acceptable characters
         name = name.trim();
         if (name.length() == 0)
             return false;
@@ -175,6 +175,7 @@ class Main extends JFrame {
         public void windowClosing(WindowEvent windowEvent) {
             File file = new File("Kitchens" + File.separator + kitchen.getOwner() + ".kitchen");
 
+            //Write kitchen object to file, close program
             ObjectOutputStream writer = null;
             try {
                 if (file.exists())

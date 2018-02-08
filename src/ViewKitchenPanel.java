@@ -125,10 +125,12 @@ public class ViewKitchenPanel extends JPanelKitchen {
     private class BoxChanged implements ActionListener {
         final int code;
 
-        BoxChanged(int i) { code = i; }
+        BoxChanged(int i) {
+            code = i;
+        }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) { //Swaps boxes as necessary
             if (code == 3 && !checkBoxes[3].isSelected()) {
                 checkBoxes[4].setSelected(true);
             } else if (code == 4 && !checkBoxes[4].isSelected()) {
@@ -149,7 +151,7 @@ public class ViewKitchenPanel extends JPanelKitchen {
         ingredientsList.setList(ings);
     }
 
-    private boolean worksWithFilters(Ingredient ing) {
+    private boolean worksWithFilters(Ingredient ing) { //Checks if the filters match the ingredient
         Priority p = ing.getPriority();
         int i = 0;
         switch (p) {

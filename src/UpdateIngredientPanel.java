@@ -35,7 +35,7 @@ public class UpdateIngredientPanel extends JPanelKitchen {
         unitField.setPreferredSize(new Dimension(150, 20));
         hasCount = new JCheckBox();
         hasCount.setSelected(true);
-        hasCount.addActionListener(new UpdateIngredientPanel.SwapCheckBox());
+        hasCount.addActionListener(new SwapCheckBox());
         isAvailable = new JCheckBox();
         isAvailable.setEnabled(false);
 
@@ -118,12 +118,12 @@ public class UpdateIngredientPanel extends JPanelKitchen {
     @Override
     public void switchedTo() {
         nameComboBox.setList(Main.getKitchen().getIngredients());
-        nameComboBox.addActionListener(new RecipeSelected());
+        nameComboBox.addActionListener(new IngredientSelected());
     }
 
     private class SwapCheckBox implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {
+        public void actionPerformed(ActionEvent actionEvent) { //React to hasCount being swapped
             unitField.setEnabled(hasCount.isSelected());
             countField.setEnabled(hasCount.isSelected());
             isAvailable.setEnabled(!hasCount.isSelected());
@@ -133,9 +133,9 @@ public class UpdateIngredientPanel extends JPanelKitchen {
         }
     }
 
-    private class RecipeSelected implements ActionListener {
+    private class IngredientSelected implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {
+        public void actionPerformed(ActionEvent actionEvent) { //Update all fields with ingredient
             Ingredient ing = (Ingredient) nameComboBox.getSelectedItem();
             if (ing == null) return;
             boolean c = ing.getUnit().equals("");
@@ -167,19 +167,21 @@ public class UpdateIngredientPanel extends JPanelKitchen {
                     return;
                 }
             }
-            if (ing == null || (c && unit.length() == 0)); //Stop because they haven't finished
-            else if ((c && !Main.isNameAcceptable(unit))) {
-                failed("Unit can only have basic characters");
-            } else if (c && count < 0) {
-                failed("Count must be at least 0");
-            } else {
-                if (c) ing.setCount(count);
-                else ing.setCount((a) ? -1 : -2);
-                String u = (c) ? unit : "";
-                ing.setUnit(u);
-                ing.setPriority((Priority) priorityJComboBox.getSelectedItem());
-                succeeded(ing.getName());
+            if (ing != null && (!c || unit.length() != 0)) { //Require selected ingredient and unit (if checked)
+                if ((c && !Main.isNameAcceptable(unit))) {
+                    failed("Unit can only have basic characters");
+                } else if (c && count < 0) {
+                    failed("Count must be at least 0");
+                } else {
+                    if (c) ing.setCount(count);
+                    else ing.setCount((a) ? -1 : -2);
+                    String u = (c) ? unit : "";
+                    ing.setUnit(u);
+                    ing.setPriority((Priority) priorityJComboBox.getSelectedItem());
+                    succeeded(ing.getName());
+                }
             }
+
 
         }
 

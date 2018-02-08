@@ -20,6 +20,7 @@ class Kitchen implements Serializable {
         return owner;
     }
 
+    //Nearly all uses of these three methods requires receiving a list of ObjectKitchen
     public ArrayList<ObjectKitchen> getIngredients() {
         return ObjectKitchen.convertToObjectKitchen(ingredients);
     }
@@ -59,7 +60,7 @@ class Kitchen implements Serializable {
     public boolean removeIngredient(Ingredient i) {
         if (ingredients.contains(i)) {
             ingredients.remove(i);
-            for (Recipe r : recipes) {
+            for (Recipe r : recipes) { //Clear all references to ingredient i
                 r.getIngredients().remove(i);
             }
             return true;
@@ -85,7 +86,7 @@ class Kitchen implements Serializable {
     public boolean removePerson(Person p) {
         if (people.contains(p)) {
             people.remove(p);
-            for (Recipe r : recipes) {
+            for (Recipe r : recipes) { //Clear all references to person p
                 r.getPeople().remove(p);
             }
             return true;

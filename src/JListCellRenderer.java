@@ -2,11 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 
 class JListCellRenderer extends DefaultListCellRenderer {
+    //Displays the name of an object
 
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        if(value instanceof ObjectKitchen){
+        if (value instanceof ObjectKitchen) {
             ObjectKitchen person = (ObjectKitchen) value;
             setText(person.getName());
         }

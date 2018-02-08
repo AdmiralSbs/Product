@@ -4,12 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 abstract class JPanelKitchen extends JPanel {
-    JLabel topLabel;
-    JButton[] buttons;
-    int[] locations;
-    Dimension buttonSize;
+    //Standardizes the panels and handles repetitive code
 
-    class BPress implements ActionListener {
+    JLabel topLabel; //Title label for each panel
+    JButton[] buttons;
+    int[] locations; //Numbers correspond to locations in the main's panel array, -1 signals not to add a BPress
+    Dimension buttonSize; //Allows for modification per panel
+
+    class BPress implements ActionListener { //Calls for a panel switch
         private final int i;
 
         BPress(int i) {
@@ -22,7 +24,7 @@ abstract class JPanelKitchen extends JPanel {
         }
     }
 
-    void setUp() {
+    void setUp() { //Called in a subclass's constructor
         topLabel.setFont(Main.TOP_LABEL_FONT);
         for (int i = 0; i < buttons.length; i++) {
             if (locations[i] >= 0)
@@ -31,6 +33,7 @@ abstract class JPanelKitchen extends JPanel {
         }
     }
 
-    public void switchedTo() { }
+    public void switchedTo() {
+    } //Overridden if necessary
 
 }
