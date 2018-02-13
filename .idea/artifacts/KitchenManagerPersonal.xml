@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact name="KitchenManager">
+  <artifact name="KitchenManagerPersonal">
     <output-path>$PROJECT_DIR$/../../KitchenManagerStuff</output-path>
     <root id="root">
       <element id="archive" name="KitchenManager.jar">

@@ -16,4 +16,4 @@ Notes on Objects -
 All names are final
 
 For Mrs. Ladwig:
-Please copy and paste the entire Product folder for testing.  DO NOT remove the package or the program will not work.
+You only need to copy and paste the jar file to run the program.
