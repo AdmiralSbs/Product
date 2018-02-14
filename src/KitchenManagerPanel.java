@@ -42,7 +42,7 @@ public class KitchenManagerPanel extends JPanelKitchen {
     }
 
     @Override
-    public void switchedTo() { //
+    public void switchedTo() { //Disables areas that aren't yet usable
         buttons[0].setEnabled(Main.getKitchen().getRecipes().size() > 0);
         buttons[2].setEnabled(Main.getKitchen().getIngredients().size() > 0);
         buttons[3].setEnabled(Main.getKitchen().getIngredients().size() > 0 || Main.getKitchen().getRecipes().size() > 0);

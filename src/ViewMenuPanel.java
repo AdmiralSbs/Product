@@ -108,7 +108,6 @@ public class ViewMenuPanel extends JPanelKitchen {
         peep.addAll(Main.getKitchen().getPeople());
         people.setList(peep);
         selectedPeople.setList(new ArrayList<>());
-        System.out.println("Switched to menu");
     }
 
     private void createMenu() {
