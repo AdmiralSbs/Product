@@ -96,21 +96,21 @@ class Kitchen implements Serializable {
 
     public void addIngredient(Ingredient i) {
         if (!ingredients.contains(i)) {
-            ObjectKitchen.addAlphabetically(ObjectKitchen.convertToObjectKitchen(ingredients), i);
+            ingredients.add(ObjectKitchen.addAlphabetically(ingredients, i), i);
         }
 
     }
 
     public void addRecipe(Recipe r) {
         if (!recipes.contains(r)) {
-            ObjectKitchen.addAlphabetically(ObjectKitchen.convertToObjectKitchen(recipes), r);
+            recipes.add(ObjectKitchen.addAlphabetically(recipes, r), r);
         }
 
     }
 
     public void addPerson(Person p) {
         if (!people.contains(p)) {
-            ObjectKitchen.addAlphabetically(ObjectKitchen.convertToObjectKitchen(people), p);
+            people.add(ObjectKitchen.addAlphabetically(people, p), p);
         }
     }
 

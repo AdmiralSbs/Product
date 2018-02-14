@@ -45,7 +45,7 @@ class JAutoComboBox extends JComboBox<ObjectKitchen> {
     }
 
     public void addItem(ObjectKitchen o) {
-        ObjectKitchen.addAlphabetically(baseList, o);
+        baseList.add(ObjectKitchen.addAlphabetically(baseList, o), o);
         setItemsToList(); //Cannot easily add alphabetically to a vector
     }
 
