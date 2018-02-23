@@ -234,7 +234,7 @@ public class ViewMenuPanel extends JPanelKitchen {
             cssFile.createNewFile();
         } catch (Exception ignored) {
         }
-        StringBuilder cssText = new StringBuilder("@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700’);\n")
+        StringBuilder cssText = new StringBuilder("@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');\n")
                 .append("@import url('https://fonts.googleapis.com/css?family=Merriweather:400,700');\n")
                 .append("body {\n")
                 .append("  /* background-color: white; a*/\n")
